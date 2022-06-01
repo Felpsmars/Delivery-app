@@ -1,23 +1,24 @@
-const { User } = require('../../database/models/');
-const { generateToken } = require('../utils/auth');
+const { User } = require('../../database/models');
+const { generateToken, hashPassword } = require('../utils/auth');
+const ERRORS = require('../utils/error');
 
-const login = async ({ password, username }) => {
-    const findOneUser = await User.findOne({
-        where: {
-            username,
-        }
+const login = async ({ email, password }) => {
+    const passwordHash = hashPassword(password);
+
+    const findOneEmail = await User.findOne({
+        where: { email },
     });
-    if(!findOneUser) throw Error({ isExpected: true, code: 404, message: 'User not found'})
-
+    if (!findOneEmail) throw ERRORS.USER.NOT_FOUND_EMAIL;
+    console.log('aqui');
     const findOneWithPassword = await User.findOne({
-        where: {
-            username,
-            password
-        }
+        where: { email, password: passwordHash },
     });
-    if(!findOneWithPassword) throw Error({ isExpected: true, code: 404, message: 'Wrong password'});
+    if (!findOneWithPassword) {
+        throw ERRORS.USER.NOT_FOUND_PASSWORD;
+    }
     
-    const token = await generateToken(username);
-    return token; 
+    const token = await generateToken({ email });
+    const { dataValues: { role } } = findOneWithPassword;
+    return { token, role };
 };
 module.exports = { login };

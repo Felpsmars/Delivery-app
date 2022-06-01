@@ -1,8 +1,8 @@
 const Joi = require('joi');
 
 const login = Joi.object({
-    username: Joi.string().required().min(6),
+    email: Joi.string().email().required(),
     password: Joi.string().required().min(6),
-})
+});
 
 module.exports = { login };
