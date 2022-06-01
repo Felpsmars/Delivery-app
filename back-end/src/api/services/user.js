@@ -9,7 +9,7 @@ const login = async ({ email, password }) => {
         where: { email },
     });
     if (!findOneEmail) throw ERRORS.USER.NOT_FOUND_EMAIL;
-    console.log('aqui');
+
     const findOneWithPassword = await User.findOne({
         where: { email, password: passwordHash },
     });
