@@ -15,4 +15,10 @@ userRouter.route('/login')
         userController.login,
     );
 
+userRouter.route('/register')
+    .post(
+        userMiddleware.validateCreate,
+        userController.create,
+    );
+
 module.exports = userRouter;
