@@ -8,7 +8,7 @@ const validateLogin = async (req, _res, next) => {
 
 const validateCreate = async (req, _res, next) => {
     const { name, email, password } = req.body;
-    await userSchema.login.validateAsync({ name, email, password });
+    await userSchema.create.validateAsync({ name, email, password });
     return next();
 };
 
