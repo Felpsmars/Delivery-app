@@ -3,19 +3,30 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 const Login = () => {
-  const [emails, setEmails] = useState();
-  const [passwords, setPasswords] = useState();
+  const [emails, setEmails] = useState('');
+  const [passwords, setPasswords] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
-
+  const minPassLength = 6;
+  const emailCheck = emails.match(/\S+@\S+\.\S+/);
   const login = async (email, password) => {
     const { REACT_APP_SERVER } = process.env;
     try {
-      const request = axios.post(`${REACT_APP_SERVER}/login`, {
+      const request = await axios.post(`${REACT_APP_SERVER}/login`, {
         email,
         password,
       });
-      const { data: { user } } = await request;
+      // const request = await fetch(`${REACT_APP_SERVER}/login`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     email,
+      //     password,
+      //   }),
+      // });
+      const { data: { user } } = request;
       setIsLogged(true);
       return user.token;
     } catch (error) {
@@ -26,12 +37,14 @@ const Login = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    console.log(emails);
+    console.log(passwords);
     const response = await login(emails, passwords);
     localStorage.setItem('user', response);
     console.log(response);
   };
 
-  if (isLogged) return <Redirect to="/products" />;
+  if (isLogged) return <Redirect to="/customer/products" />;
 
   return (
     <form className="form-login">
@@ -68,6 +81,7 @@ const Login = () => {
         onClick={ handleClick }
         className="button"
         data-testid="common_login__button-login"
+        disabled={ !(passwords.length >= minPassLength && emailCheck) }
       >
         Entrar
       </button>
@@ -78,7 +92,13 @@ const Login = () => {
       >
         Register
       </button>
-      {wrongLogin && <span>MESSAGE</span>}
+      {wrongLogin && (
+        <p
+          data-testid="common_login__element-invalid-email"
+        >
+          MESSAGE
+
+        </p>)}
     </form>
   );
 };
