@@ -1,32 +1,33 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 const Login = () => {
-  const [emails, setEmails] = useState("");
-  const [passwords, setPasswords] = useState("");
+  const [emails, setEmails] = useState();
+  const [passwords, setPasswords] = useState();
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
 
   const login = async (email, password) => {
+    const { REACT_APP_SERVER } = process.env;
     try {
-      const request = axios.post("http://localhost:3001/login", {
+      const request = axios.post(`${REACT_APP_SERVER}/login`, {
         email,
         password,
       });
-      const { data } = await request;
+      const { data: { user } } = await request;
       setIsLogged(true);
-      return data.token;
+      return user.token;
     } catch (error) {
       console.log(error);
-      setWrongLogin(true)
+      setWrongLogin(true);
     }
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
     const response = await login(emails, passwords);
-    localStorage.setItem("user", response);
+    localStorage.setItem('user', response);
     console.log(response);
   };
 
@@ -40,10 +41,10 @@ const Login = () => {
           data-testid="common_login__input-email"
           type="email"
           name="email"
-          value={emails}
+          value={ emails }
           className="email"
           placeholder="Digite seu email"
-          onChange={({ target: { value } }) => setEmails(value)}
+          onChange={ ({ target: { value } }) => setEmails(value) }
           required
         />
       </label>
@@ -54,17 +55,17 @@ const Login = () => {
           type="password"
           name="senha"
           data-testid="common_login__input-password"
-          value={passwords}
+          value={ passwords }
           className="senha"
           placeholder="Digite sua senha"
-          onChange={({ target: { value } }) => setPasswords(value)}
+          onChange={ ({ target: { value } }) => setPasswords(value) }
           required="true"
         />
       </label>
 
       <button
         type="submit"
-        onClick={handleClick}
+        onClick={ handleClick }
         className="button"
         data-testid="common_login__button-login"
       >
