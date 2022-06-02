@@ -1,6 +1,12 @@
+const { Op } = require('sequelize');
 const { User } = require('../../database/models');
 const { generateToken, hashPassword } = require('../utils/auth');
 const ERRORS = require('../utils/error');
+
+const getPublicUser = (modelUser) => {
+    const { password, ...publicUser } = modelUser.dataValues;
+    return publicUser;
+};
 
 const login = async ({ email, password }) => {
     const passwordHash = hashPassword(password);
@@ -21,4 +27,18 @@ const login = async ({ email, password }) => {
     const { dataValues: { role } } = findOneWithPassword;
     return { token, role };
 };
-module.exports = { login };
+
+const create = async ({ name, email, password }) => {
+    const findOneUser = await User.findOne({
+        where: { [Op.or]: [{
+            email,
+        }, {
+            name,
+        }] },
+    });
+    const hashedPassword = hashPassword(password);
+    if (findOneUser) throw ERRORS.USER.ALREADY_EXISTS;
+    const user = await User.create({ name, email, password: hashedPassword, role: 'customer' }); 
+    return getPublicUser(user);
+};
+module.exports = { login, create };

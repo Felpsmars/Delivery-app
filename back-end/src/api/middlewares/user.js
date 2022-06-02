@@ -5,4 +5,11 @@ const validateLogin = async (req, _res, next) => {
     await userSchema.login.validateAsync({ email, password });
     return next();
 };
-module.exports = { validateLogin };
+
+const validateCreate = async (req, _res, next) => {
+    const { name, email, password } = req.body;
+    await userSchema.create.validateAsync({ name, email, password });
+    return next();
+};
+
+module.exports = { validateLogin, validateCreate };

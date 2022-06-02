@@ -7,4 +7,10 @@ const login = async (req, res) => {
     return res.status(200).json({ user });
 };
 
-module.exports = { login };
+const create = async (req, res) => {
+    const { name, email, password } = req.body;
+    const user = await userService.create({ name, email, password });
+    return res.status(201).json({ user });
+};
+
+module.exports = { login, create };
