@@ -21,4 +21,11 @@ userRouter.route('/register')
         userController.create,
     );
 
+userRouter.route('/register')
+    .post(
+        userMiddleware.validateCreate,
+        userController.create,
+    );
+
+    
 module.exports = userRouter;
