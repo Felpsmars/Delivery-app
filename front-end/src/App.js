@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from './pages/Login';
 import Products from './pages/Products';
 import CreateUser from './pages/CreateUser';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route exact path="/login"><Login /></Route>
       <Route exact path="/register"><CreateUser /></Route>
       <Route exact path="/customer/products" component={ Products } />
+      <Route exact path="/customer/checkout"><Checkout /></Route>
     </Switch>
   );
 }
