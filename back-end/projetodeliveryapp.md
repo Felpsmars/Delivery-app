@@ -45,3 +45,51 @@ Projeto desenvolvido durante o módulo de back-end do curso da Trybe.
                 "role": "customer"
             }
         }
+        
+## Rotas de Produtos [/products]
+
+### Listar Todos [GET]
+
++ Request (application/json)
+    + Headers
+        
+            Authorization: JWT Token
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "Skol Lata 250ml",
+                "price": "2",
+                "urlImage": "http://localhost:3001/images/skol_lata_350ml.jpg"
+            },
+            {
+                "id": 2,
+                "name": "Heineken 600ml",
+                "price": "8",
+                "urlImage": "http://localhost:3001/images/heineken_600ml.jpg"
+            },
+            {
+                ...
+            }
+        ]
+
+### Listar por ID [GET /{id}]
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: JWT Token
+    
++ Parameters
+    + id (number)
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "Skol Lata 250ml",
+            "price": "2",
+            "urlImage": "http://localhost:3001/images/skol_lata_350ml.jpg"
+        }
