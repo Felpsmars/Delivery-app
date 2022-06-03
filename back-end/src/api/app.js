@@ -6,6 +6,7 @@ const appRouter = require('./routers');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cors());
 app.use(appRouter);
 
 /* app.get('/coffee', (_req, res) => res.status(418).end()); */
