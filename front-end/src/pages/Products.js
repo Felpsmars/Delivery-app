@@ -1,7 +1,8 @@
 import React from 'react';
+import Navbar from '../components/Navbar';
 
 const Products = () => (
-  <h1>Products</h1>
+  <Navbar />
 );
 
 export default Products;

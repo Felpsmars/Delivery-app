@@ -20,18 +20,13 @@ const Login = () => {
         password,
       });
       const { data: { user } } = request;
+      localStorage.setItem('user', JSON.stringify(user));
       setIsLogged(true);
-      return user.token;
+      return user;
     } catch (error) {
       console.log(error);
       setWrongLogin(true);
     }
-  };
-
-  const handleLogin = async () => {
-    const response = await login();
-    localStorage.setItem('user', response);
-    console.log(response);
   };
 
   const areFieldsValid = (
@@ -75,7 +70,7 @@ const Login = () => {
 
       <button
         type="button"
-        onClick={ handleLogin }
+        onClick={ login }
         className="button"
         data-testid="common_login__button-login"
         disabled={ !areFieldsValid }
