@@ -2,7 +2,7 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('Sales_Products', {
+    await queryInterface.createTable('sales_products', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -33,6 +33,6 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    await queryInterface.dropTable('Sales_Products');
+    await queryInterface.dropTable('sales_products');
   }
 };
