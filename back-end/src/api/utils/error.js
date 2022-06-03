@@ -14,9 +14,7 @@ module.exports = {
     NOT_FOUND_PASSWORD: Error(404, 'Wrong password'),
     ALREADY_EXISTS: Error(409, 'User already registered'),
   },
-  POST: {
-    NOT_FOUND: Error(404, 'Post does not exist'),
-    NOT_FOUND_CATEGORY: Error(400, '"categoryIds" not found'),
-    INVALID_USER: Error(401, 'Unauthorized user'),
+  PRODUCT: {
+    NOT_FOUND: Error(404, 'Product not found'),
   },
 };
