@@ -2,7 +2,7 @@
 
 module.exports = {
   async up (queryInterface) {
-    await queryInterface.bulkInsert('Products', [
+    await queryInterface.bulkInsert('products', [
       {
         name: 'Skol Lata 250ml',
         price: 2.20,

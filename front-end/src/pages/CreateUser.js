@@ -2,53 +2,64 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-const Login = () => {
+const CreateUser = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLogged, setIsLogged] = useState(false);
-  const [wrongLogin, setWrongLogin] = useState(false);
+  const [name, setName] = useState('');
+  const [wrongLoginRegister, setWrongLoginRegister] = useState(false);
   const history = useHistory();
 
+  const MIN_NAME_LENGTH = 12;
   const MIN_PASS_LENGTH = 6;
   const emailCheck = email.match(/\S+@\S+\.\S+/);
 
-  const login = async () => {
+  const create = async () => {
     const { REACT_APP_SERVER } = process.env;
     try {
-      const request = await axios.post(`${REACT_APP_SERVER}/login`, {
+      const request = await axios.post(`${REACT_APP_SERVER}/register`, {
+        name,
         email,
         password,
       });
-      const { data: { user } } = request;
-      setIsLogged(true);
-      return user.token;
+      console.log(request);
+      history.push('/customer/products');
     } catch (error) {
       console.log(error);
-      setWrongLogin(true);
+      setWrongLoginRegister(true);
     }
   };
 
-  const handleLogin = async () => {
-    const response = await login();
-    localStorage.setItem('user', response);
-    console.log(response);
-  };
-
   const areFieldsValid = (
-    emailCheck
+    name.length >= MIN_NAME_LENGTH
     && password.length >= MIN_PASS_LENGTH
+    && emailCheck
   );
 
-  if (isLogged) {
-    history.push('/customer/products');
-  }
+  const handleClick = (e) => {
+    e.preventDefault();
+    create();
+  };
 
   return (
     <form className="form-login">
       <label className="label" htmlFor="email">
+        Nome:
+        <input
+          data-testid="common_register__input-name"
+          type="text"
+          name="name"
+          value={ name }
+          className="email"
+          placeholder="Digite seu nome"
+          onChange={ ({ target: { value } }) => setName(value) }
+          required
+        />
+      </label>
+
+      <label className="label" htmlFor="email">
         Email:
         <input
-          data-testid="common_login__input-email"
+          data-testid="common_register__input-email"
           type="email"
           name="email"
           value={ email }
@@ -64,7 +75,7 @@ const Login = () => {
         <input
           type="password"
           name="senha"
-          data-testid="common_login__input-password"
+          data-testid="common_register__input-password"
           value={ password }
           className="senha"
           placeholder="Digite sua senha"
@@ -74,30 +85,24 @@ const Login = () => {
       </label>
 
       <button
-        type="button"
-        onClick={ handleLogin }
+        type="submit"
+        onClick={ handleClick }
         className="button"
-        data-testid="common_login__button-login"
+        data-testid="common_register__button-register"
         disabled={ !areFieldsValid }
       >
-        Entrar
+        Registrar
       </button>
-      <button
-        type="button"
-        className="button"
-        data-testid="common_login__button-register"
-        onClick={ () => history.push('/register') }
-      >
-        Register
-      </button>
-      {wrongLogin && (
+
+      {wrongLoginRegister && (
         <p
-          data-testid="common_login__element-invalid-email"
+          data-testid="common_register__element-invalid_register"
         >
           MESSAGE
+
         </p>)}
     </form>
   );
 };
 
-export default Login;
+export default CreateUser;
