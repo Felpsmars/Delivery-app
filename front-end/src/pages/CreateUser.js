@@ -21,7 +21,7 @@ const CreateUser = () => {
         email,
         password,
       });
-      localStorage.setItem('user', JSON.stringify(request.data));
+      localStorage.setItem('user', JSON.stringify(request.data.user));
       history.push('/customer/products');
     } catch (error) {
       console.log(error);
