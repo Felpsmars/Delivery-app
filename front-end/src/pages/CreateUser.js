@@ -70,7 +70,7 @@ const CreateUser = () => {
           className="senha"
           placeholder="Digite sua senha"
           onChange={ ({ target: { value } }) => setPasswords(value) }
-          required="true"
+          required
         />
       </label>
 

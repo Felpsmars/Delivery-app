@@ -1,31 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const Login = () => {
-  const [emails, setEmails] = useState('');
-  const [passwords, setPasswords] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
   const minPassLength = 6;
-  const emailCheck = emails.match(/\S+@\S+\.\S+/);
-  const login = async (email, password) => {
+  const emailCheck = email.match(/\S+@\S+\.\S+/);
+  const history = useHistory();
+
+  const login = async () => {
     const { REACT_APP_SERVER } = process.env;
     try {
       const request = await axios.post(`${REACT_APP_SERVER}/login`, {
         email,
         password,
       });
-      // const request = await fetch(`${REACT_APP_SERVER}/login`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     email,
-      //     password,
-      //   }),
-      // });
       const { data: { user } } = request;
       setIsLogged(true);
       return user.token;
@@ -37,9 +29,7 @@ const Login = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log(emails);
-    console.log(passwords);
-    const response = await login(emails, passwords);
+    const response = await login();
     localStorage.setItem('user', response);
     console.log(response);
   };
@@ -54,10 +44,10 @@ const Login = () => {
           data-testid="common_login__input-email"
           type="email"
           name="email"
-          value={ emails }
+          value={ email }
           className="email"
           placeholder="Digite seu email"
-          onChange={ ({ target: { value } }) => setEmails(value) }
+          onChange={ ({ target: { value } }) => setEmail(value) }
           required
         />
       </label>
@@ -68,11 +58,11 @@ const Login = () => {
           type="password"
           name="senha"
           data-testid="common_login__input-password"
-          value={ passwords }
+          value={ password }
           className="senha"
           placeholder="Digite sua senha"
-          onChange={ ({ target: { value } }) => setPasswords(value) }
-          required="true"
+          onChange={ ({ target: { value } }) => setPassword(value) }
+          required
         />
       </label>
 
@@ -81,14 +71,15 @@ const Login = () => {
         onClick={ handleClick }
         className="button"
         data-testid="common_login__button-login"
-        disabled={ !(passwords.length >= minPassLength && emailCheck) }
+        disabled={ !(password.length >= minPassLength && emailCheck) }
       >
         Entrar
       </button>
       <button
-        type="submit"
+        type="button"
         className="button"
         data-testid="common_login__button-register"
+        onClick={ () => history.push('/register') }
       >
         Register
       </button>
@@ -97,7 +88,6 @@ const Login = () => {
           data-testid="common_login__element-invalid-email"
         >
           MESSAGE
-
         </p>)}
     </form>
   );
