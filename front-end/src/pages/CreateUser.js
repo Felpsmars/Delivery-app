@@ -21,7 +21,7 @@ const CreateUser = () => {
         email,
         password,
       });
-      console.log(request);
+      localStorage.setItem('user', JSON.stringify(request.data));
       history.push('/customer/products');
     } catch (error) {
       console.log(error);
@@ -99,7 +99,6 @@ const CreateUser = () => {
           data-testid="common_register__element-invalid_register"
         >
           MESSAGE
-
         </p>)}
     </form>
   );
