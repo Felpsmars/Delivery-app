@@ -4,6 +4,7 @@ require('express-async-errors');
 const appRouter = require('./routers');
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(cors());
 app.use(appRouter);
