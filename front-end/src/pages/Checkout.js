@@ -29,18 +29,21 @@ function Checkout() {
                         <th>Subtotal</th>
                         <th>Remover</th>
                     </thead>
-                    {products.map((e) => 
-                    <li 
-                    key={e.id}
-                    data-testeid={`element-order-table-name-${e.id}`}
-                    >
-                        <p>{e.id}</p>
-                        <p>{e.description}</p>
-                        <p>{e.quantity}</p>
-                        <p>{e.unity_value}</p>
-                        <p>{e.quantity * e.unity_value}</p>
-                        <button type='submit'>Remover</button>
-                    </li>)}
+                    <tbody>
+
+                        {products.map((e) =>
+                            <tr
+                                key={e.id}
+                                data-testeid={`element-order-table-name-${e.id}`}
+                            >
+                                <td>{e.id}</td>
+                                <td>{e.description}</td>
+                                <td>{e.quantity}</td>
+                                <td>{e.unity_value}</td>
+                                <td>{e.quantity * e.unity_value}</td>
+                                <button type='submit'>Remover</button>
+                            </tr>)}
+                    </tbody>
                 </table>
             </div>
         </div>
