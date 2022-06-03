@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Redirect, useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
-  const minPassLength = 6;
-  const emailCheck = email.match(/\S+@\S+\.\S+/);
   const history = useHistory();
+
+  const MIN_PASS_LENGTH = 6;
+  const emailCheck = email.match(/\S+@\S+\.\S+/);
 
   const login = async () => {
     const { REACT_APP_SERVER } = process.env;
@@ -27,14 +28,20 @@ const Login = () => {
     }
   };
 
-  const handleClick = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     const response = await login();
     localStorage.setItem('user', response);
     console.log(response);
   };
 
-  if (isLogged) return <Redirect to="/customer/products" />;
+  const areFieldsValid = (
+    emailCheck
+    && password.length >= MIN_PASS_LENGTH
+  );
+
+  if (isLogged) {
+    history.push('/customer/products');
+  }
 
   return (
     <form className="form-login">
@@ -67,11 +74,11 @@ const Login = () => {
       </label>
 
       <button
-        type="submit"
-        onClick={ handleClick }
+        type="button"
+        onClick={ handleLogin }
         className="button"
         data-testid="common_login__button-login"
-        disabled={ !(password.length >= minPassLength && emailCheck) }
+        disabled={ !areFieldsValid }
       >
         Entrar
       </button>

@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const CreateUser = () => {
-  const [emails, setEmails] = useState('');
-  const [passwords, setPasswords] = useState('');
-  const [names, setNames] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [wrongLoginRegister, setWrongLoginRegister] = useState(false);
-  const minPassLength = 6;
-  const emailCheck = emails.match(/\S+@\S+\.\S+/);
-  const create = async (name, email, password) => {
+  const history = useHistory();
+
+  const MIN_NAME_LENGTH = 12;
+  const MIN_PASS_LENGTH = 6;
+  const emailCheck = email.match(/\S+@\S+\.\S+/);
+
+  const create = async () => {
     const { REACT_APP_SERVER } = process.env;
     try {
       const request = await axios.post(`${REACT_APP_SERVER}/register`, {
@@ -16,18 +21,23 @@ const CreateUser = () => {
         email,
         password,
       });
-
       console.log(request);
+      history.push('/customer/products');
     } catch (error) {
       console.log(error);
       setWrongLoginRegister(true);
     }
   };
 
+  const areFieldsValid = (
+    name.length >= MIN_NAME_LENGTH
+    && password.length >= MIN_PASS_LENGTH
+    && emailCheck
+  );
+
   const handleClick = (e) => {
     e.preventDefault();
-
-    create([names, emails, passwords]);
+    create();
   };
 
   return (
@@ -38,10 +48,10 @@ const CreateUser = () => {
           data-testid="common_register__input-name"
           type="text"
           name="name"
-          value={ names }
+          value={ name }
           className="email"
           placeholder="Digite seu nome"
-          onChange={ ({ target: { value } }) => setNames(value) }
+          onChange={ ({ target: { value } }) => setName(value) }
           required
         />
       </label>
@@ -52,10 +62,10 @@ const CreateUser = () => {
           data-testid="common_register__input-email"
           type="email"
           name="email"
-          value={ emails }
+          value={ email }
           className="email"
           placeholder="Digite seu email"
-          onChange={ ({ target: { value } }) => setEmails(value) }
+          onChange={ ({ target: { value } }) => setEmail(value) }
           required
         />
       </label>
@@ -66,10 +76,10 @@ const CreateUser = () => {
           type="password"
           name="senha"
           data-testid="common_register__input-password"
-          value={ passwords }
+          value={ password }
           className="senha"
           placeholder="Digite sua senha"
-          onChange={ ({ target: { value } }) => setPasswords(value) }
+          onChange={ ({ target: { value } }) => setPassword(value) }
           required
         />
       </label>
@@ -79,7 +89,7 @@ const CreateUser = () => {
         onClick={ handleClick }
         className="button"
         data-testid="common_register__button-register"
-        disabled={ !(passwords.length >= minPassLength && emailCheck) }
+        disabled={ !areFieldsValid }
       >
         Registrar
       </button>
