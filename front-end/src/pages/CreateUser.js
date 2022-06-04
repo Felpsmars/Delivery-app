@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const CreateUser = () => {
@@ -7,7 +7,7 @@ const CreateUser = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [wrongLoginRegister, setWrongLoginRegister] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const MIN_NAME_LENGTH = 12;
   const MIN_PASS_LENGTH = 6;
@@ -22,7 +22,7 @@ const CreateUser = () => {
         password,
       });
       localStorage.setItem('user', JSON.stringify(request.data.user));
-      history.push('/customer/products');
+      navigate('/customer/products');
     } catch (error) {
       console.log(error);
       setWrongLoginRegister(true);

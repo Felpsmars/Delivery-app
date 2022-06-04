@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
@@ -7,7 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const MIN_PASS_LENGTH = 6;
   const emailCheck = email.match(/\S+@\S+\.\S+/);
@@ -34,9 +34,11 @@ const Login = () => {
     && password.length >= MIN_PASS_LENGTH
   );
 
-  if (isLogged) {
-    history.push('/customer/products');
-  }
+  useEffect(() => {
+    if (isLogged) {
+      navigate('/customer/products');
+    }
+  }, [isLogged])
 
   return (
     <form className="form-login">
@@ -81,7 +83,7 @@ const Login = () => {
         type="button"
         className="button"
         data-testid="common_login__button-register"
-        onClick={ () => history.push('/register') }
+        onClick={ () => navigate('/register') }
       >
         Register
       </button>
