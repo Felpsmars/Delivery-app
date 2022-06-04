@@ -38,7 +38,7 @@ const Login = () => {
     if (isLogged) {
       navigate('/customer/products');
     }
-  }, [isLogged])
+  }, [isLogged]);
 
   return (
     <form className="form-login">
