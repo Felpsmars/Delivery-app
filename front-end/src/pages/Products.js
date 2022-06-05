@@ -12,6 +12,7 @@ const Products = () => {
   const { REACT_APP_SERVER } = process.env;
 
   const fetchProducts = async () => {
+    console.log(user)
     const result = await axios.get(`${REACT_APP_SERVER}/products`, {
       headers: {
         Authorization: user.token,

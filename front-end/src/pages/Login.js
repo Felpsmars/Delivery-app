@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../provider/UserProvider';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
+  const { user, updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const MIN_PASS_LENGTH = 6;
@@ -19,10 +21,9 @@ const Login = () => {
         email,
         password,
       });
-      const { data: { user } } = request;
-      localStorage.setItem('user', JSON.stringify(user));
+      const { data: { user: newUser } } = request;
+      updateUser(newUser);
       setIsLogged(true);
-      return user;
     } catch (error) {
       console.log(error);
       setWrongLogin(true);
@@ -35,6 +36,7 @@ const Login = () => {
   );
 
   useEffect(() => {
+    console.log(isLogged);
     if (isLogged) {
       navigate('/customer/products');
     }

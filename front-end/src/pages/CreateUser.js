@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../provider/UserProvider';
 
 const CreateUser = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [wrongLoginRegister, setWrongLoginRegister] = useState(false);
+  const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const MIN_NAME_LENGTH = 12;
@@ -21,7 +23,7 @@ const CreateUser = () => {
         email,
         password,
       });
-      localStorage.setItem('user', JSON.stringify(request.data.user));
+      updateUser(request.data.user);
       navigate('/customer/products');
     } catch (error) {
       console.log(error);
