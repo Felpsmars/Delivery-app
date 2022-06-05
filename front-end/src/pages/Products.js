@@ -7,7 +7,8 @@ import { UserContext } from '../provider/UserProvider';
 
 const Products = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
+  const [ products, setProducts ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(true);
   const { user, validateUser: isUserValid, updateUser } = useContext(UserContext);
   const { REACT_APP_SERVER } = process.env;
 
@@ -26,24 +27,31 @@ const Products = () => {
       updateUser();
       navigate('/');
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
     if (user) fetchProducts();
     validateUser();
-  }, [user]);
+  }, [ user ]);
 
   return (
     <div>
-      <Navbar />
       {
-        !products.length ? (
+        isLoading ? (
           <p>Aguarde um momento...</p>
-        ) : products.map((prod, idx) => (
-          <ProductCard
-            key={ `product-card-${idx}` }
-            obj={ prod }
-          />))
+        ) : (
+          <>
+            <Navbar />
+            {
+              products.map((prod, idx) => (
+                <ProductCard
+                  key={`product-card-${idx}`}
+                  obj={prod}
+                />))
+            }
+          </>
+        )
       }
     </div>
   );

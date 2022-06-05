@@ -27,7 +27,6 @@ const UserProvider = ({ children }) => {
 
   const fetchUser = () => {
     const currentUser = localStorage.getItem('user');
-
     if (currentUser) {
       const parsedUser = JSON.parse(currentUser);
       setUser(parsedUser);
@@ -43,6 +42,11 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    setUser(undefined);
+    updateUser();
+  }
+
   useEffect(() => {
     fetchUser();
   }, []);
@@ -51,6 +55,7 @@ const UserProvider = ({ children }) => {
     user,
     updateUser,
     validateUser,
+    logout,
   };
 
   return (
