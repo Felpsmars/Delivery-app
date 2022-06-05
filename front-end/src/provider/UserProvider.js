@@ -39,6 +39,7 @@ const UserProvider = ({ children }) => {
       localStorage.removeItem('user');
     } else {
       localStorage.setItem('user', JSON.stringify(newUser));
+      setUser(newUser);
     }
   };
 

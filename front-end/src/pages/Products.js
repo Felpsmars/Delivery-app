@@ -12,7 +12,6 @@ const Products = () => {
   const { REACT_APP_SERVER } = process.env;
 
   const fetchProducts = async () => {
-    console.log(user)
     const result = await axios.get(`${REACT_APP_SERVER}/products`, {
       headers: {
         Authorization: user.token,
@@ -38,11 +37,11 @@ const Products = () => {
     <div>
       <Navbar />
       {
-        products.length === 0 ? (
+        !products.length ? (
           <p>Aguarde um momento...</p>
         ) : products.map((prod, idx) => (
           <ProductCard
-            key={ idx }
+            key={ `product-card-${idx}` }
             obj={ prod }
           />))
       }
