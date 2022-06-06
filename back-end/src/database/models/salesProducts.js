@@ -1,21 +1,20 @@
-const { DataTypes } = require('sequelize');
 
 const data = {
     foreignKey: 'sale_id',
-    otherKey: 'product_id',
+    otherKey: 'product_d',
     through: 'salesProducts',
-    as: 'products'
+    as: 'product'
 };
 
 const data2 = {
-    foreignKey: 'productId',
+    foreignKey: 'product_id',
     otherKey: 'sale_id',
     through: 'salesProducts',
-    as: 'sales'
+    as: 'sale'
 };
 
-module.exports = (Sequelize) => {
-    const salesProducts = Sequelize.define('salesProducts', {
+module.exports = (sequelize, DataTypes) => {
+    const salesProducts = sequelize.define('sales_products', {
         quantity: {
             type: DataTypes.INTEGER,
             allowNull: false,
