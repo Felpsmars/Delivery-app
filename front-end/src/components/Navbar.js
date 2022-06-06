@@ -5,15 +5,15 @@ const Navbar = ({ pageName }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useContext(UserContext);
 
-  const urlStringPageName = (pageName) =>{
+  const urlStringPageName = (pageName) => {
     switch (pageName) {
-      case 'Produtos': 
-        return 'products';
+    case 'Produtos':
+      return 'products';
 
-      default: 
-        return '';
+    default:
+      return '';
     }
-  }
+  };
 
   useEffect(() => {
     if (user) setIsLoading(false);
@@ -27,8 +27,8 @@ const Navbar = ({ pageName }) => {
       <ul className="navbar">
         <li>
           <a
-            data-testid={`customer_products__element-navbar-link-${pageName}`}
-            href={`/customer/${urlStringPageName(pageName)}`}
+            data-testid={ `customer_products__element-navbar-link-${pageName}` }
+            href={ `/customer/${urlStringPageName(pageName)}` }
           >
             {pageName}
           </a>
@@ -52,7 +52,7 @@ const Navbar = ({ pageName }) => {
           <a
             data-testid="customer_products__element-navbar-link-logout"
             href="/"
-            onClick={() => logout()}
+            onClick={ () => logout() }
           >
             Sair
           </a>

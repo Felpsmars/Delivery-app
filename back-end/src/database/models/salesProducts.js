@@ -8,10 +8,10 @@ otherKey: 'sale_id',
 through: 'salesProducts', 
 as: 'sale' };
 
-module.exports = (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
     const salesProducts = sequelize.define('sales_products', {
         quantity: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false,
           }
     }, {
@@ -21,12 +21,12 @@ module.exports = (sequelize) => {
     });
 
     salesProducts.associate = (models) => {
-        models.sale.belongsTo(
-            models.product, 
+        models.Sale.belongsToMany(
+            models.Product, 
         data,
         );
-   models.product.belongsTo(
-            models.sale, 
+        models.Product.belongsToMany(
+            models.Sale, 
             data2,
         );
         };

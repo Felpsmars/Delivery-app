@@ -28,7 +28,6 @@ userRouter.route('/register')
         userMiddleware.validateCreate,
         userController.create,
     );
-
     
 userRouter.route('/validateToken')
     .get(

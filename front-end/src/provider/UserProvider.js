@@ -45,7 +45,7 @@ const UserProvider = ({ children }) => {
   const logout = () => {
     setUser(undefined);
     updateUser();
-  }
+  };
 
   useEffect(() => {
     fetchUser();

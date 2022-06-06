@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import { UserContext } from '../provider/UserProvider';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../provider/UserProvider';
 import Navbar from '../components/Navbar';
 
 function Checkout() {
@@ -17,27 +17,26 @@ function Checkout() {
 
   useEffect(() => {
     validateUser();
-  }, [user]);
+  }, [user, validateUser]);
 
   const products = [
     {
       id: 1,
-      description: "Cerveja Stella 250ml",
+      description: 'Cerveja Stella 250ml',
       quantity: 3,
       unity_value: 3.80,
     },
     {
       id: 2,
-      description: "Cerveja Heikenen 250ml",
+      description: 'Cerveja Heikenen 250ml',
       quantity: 9,
       unity_value: 7,
-    }
+    },
   ];
-
 
   return (
     <div>
-      <div><Navbar pageName={'Produtos'} /></div>
+      <div><Navbar pageName="Produtos" /></div>
       <div>
 
         <table>
@@ -53,20 +52,19 @@ function Checkout() {
           </thead>
           <tbody>
 
-            {products.map((e) =>
-              <tr
-                key={e.id}
-                data-testeid={`element-order-table-name-${e.id}`}
-              >
-                <td>{e.id}</td> 
-                <td>{e.description}</td>
-                <td>{e.quantity}</td>
-                <td>{e.unity_value}</td>
-                <td>{e.quantity * e.unity_value}</td>
-                <td>
-                  <button type='submit'>Remover</button>
-                </td>
-              </tr>)}
+            {products.map((e) => (<tr
+              key={ e.id }
+              data-testeid={ `element-order-table-name-${e.id}` }
+            >
+              <td>{e.id}</td>
+              <td>{e.description}</td>
+              <td>{e.quantity}</td>
+              <td>{e.unity_value}</td>
+              <td>{e.quantity * e.unity_value}</td>
+              <td>
+                <button type="submit">Remover</button>
+              </td>
+                                  </tr>))}
           </tbody>
         </table>
       </div>
