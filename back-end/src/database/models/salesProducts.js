@@ -9,7 +9,7 @@ through: 'salesProducts',
 as: 'sales' };
 
 module.exports = (sequelize) => {
-    const salesProducts = sequelize.define('salesProducts', {
+    const salesProducts = sequelize.define('sales_products', {
         quantity: {
             type: Sequelize.INTEGER,
             allowNull: false,
