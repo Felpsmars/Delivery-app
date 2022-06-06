@@ -3,7 +3,7 @@ otherKey: 'product_id',
 through: 'salesProducts', 
 as: 'products' };
 
-const data2 = { foreignKey: 'productId', 
+const data2 = { foreignKey: 'product_id', 
 otherKey: 'sale_id', 
 through: 'salesProducts', 
 as: 'sales' };
@@ -21,12 +21,12 @@ module.exports = (sequelize) => {
     });
 
     salesProducts.associate = (models) => {
-        models.Sale.belongsToMany(
-            models.Product, 
+        models.sale.belongsTo(
+            models.product, 
         data,
         );
-   models.Product.belongsToMany(
-            models.Sale, 
+   models.product.belongsTo(
+            models.sale, 
             data2,
         );
         };
