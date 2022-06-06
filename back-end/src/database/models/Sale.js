@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.STRING,
+      dafaultValue: 'Pendente'
     },
   }, {
     timestamps: false,
