@@ -7,9 +7,8 @@ import { UserContext } from '../provider/UserProvider';
 
 const Products = () => {
   const navigate = useNavigate();
+  const { user, isUserValid } = useContext(UserContext);
   const [ products, setProducts ] = useState([]);
-  const [ isLoading, setIsLoading ] = useState(true);
-  const { user, validateUser: isUserValid, updateUser } = useContext(UserContext);
   const { REACT_APP_SERVER } = process.env;
 
   const fetchProducts = async () => {
@@ -21,37 +20,31 @@ const Products = () => {
     setProducts(result.data);
   };
 
-  const validateUser = async () => {
-    const validation = await isUserValid();
-    if (!validation) {
-      updateUser();
+  const validateUser = () => {
+    if (isUserValid === false) {
       navigate('/');
+    } else if (isUserValid) {
+      fetchProducts();
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (user) fetchProducts();
     validateUser();
-  }, [ user ]);
+  }, [ isUserValid ]);
 
   return (
     <div>
       {
-        isLoading ? (
-          <p>Aguarde um momento...</p>
-        ) : (
-          <>
-            <Navbar />
-            {
-              products.map((prod, idx) => (
-                <ProductCard
-                  key={`product-card-${idx}`}
-                  obj={prod}
-                />))
-            }
-          </>
-        )
+        <>
+          <Navbar />
+          {
+            products.map((prod, idx) => (
+              <ProductCard
+                key={`product-card-${idx}`}
+                obj={prod}
+              />))
+          }
+        </>
       }
     </div>
   );
