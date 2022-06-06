@@ -42,7 +42,7 @@ const Products = () => {
           <p>Aguarde um momento...</p>
         ) : (
           <>
-            <Navbar />
+            <Navbar pageName={'Produtos'}/>
             {
               products.map((prod, idx) => (
                 <ProductCard

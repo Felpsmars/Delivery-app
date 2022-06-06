@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { UserContext } from '../provider/UserProvider';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
 function Checkout() {
+  const { user, validateUser: isUserValid, updateUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const validateUser = async () => {
+    const validation = await isUserValid();
+    if (!validation) {
+      updateUser();
+      navigate('/');
+    }
+  };
+
+  useEffect(() => {
+    validateUser();
+  }, [user]);
+
   const products = [
     {
       id: 1,
@@ -17,19 +34,22 @@ function Checkout() {
     }
   ];
 
+
   return (
     <div>
-      <div><Navbar /></div>
+      <div><Navbar pageName={'Produtos'} /></div>
       <div>
 
         <table>
           <thead>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>Subtotal</th>
-            <th>Remover</th>
+            <tr>
+              <th>Item</th>
+              <th>Descrição</th>
+              <th>Quantidade</th>
+              <th>Valor Unitário</th>
+              <th>Subtotal</th>
+              <th>Remover</th>
+            </tr>
           </thead>
           <tbody>
 
@@ -38,12 +58,14 @@ function Checkout() {
                 key={e.id}
                 data-testeid={`element-order-table-name-${e.id}`}
               >
-                <td>{e.id}</td>
+                <td>{e.id}</td> 
                 <td>{e.description}</td>
                 <td>{e.quantity}</td>
                 <td>{e.unity_value}</td>
                 <td>{e.quantity * e.unity_value}</td>
-                <button type='submit'>Remover</button>
+                <td>
+                  <button type='submit'>Remover</button>
+                </td>
               </tr>)}
           </tbody>
         </table>

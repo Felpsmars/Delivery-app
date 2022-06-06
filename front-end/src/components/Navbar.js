@@ -1,9 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../provider/UserProvider';
 
-const Navbar = () => {
-  const [ isLoading, setIsLoading ] = useState(true);
+const Navbar = ({ pageName }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useContext(UserContext);
+
+  const urlStringPageName = (pageName) =>{
+    switch (pageName) {
+      case 'Produtos': 
+        return 'products';
+
+      default: 
+        return '';
+    }
+  }
 
   useEffect(() => {
     if (user) setIsLoading(false);
@@ -13,13 +23,14 @@ const Navbar = () => {
     isLoading ? (
       <p>Carregando Navbar...</p>
     ) : (
+
       <ul className="navbar">
         <li>
           <a
-            data-testid="customer_products__element-navbar-link-products"
-            href="/customer/products"
+            data-testid={`customer_products__element-navbar-link-${pageName}`}
+            href={`/customer/${urlStringPageName(pageName)}`}
           >
-            Produtos
+            {pageName}
           </a>
         </li>
         <li>

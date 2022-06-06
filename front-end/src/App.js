@@ -9,18 +9,12 @@ import axios from 'axios';
 
 function App() {
   return (
-    <Switch>
-      <Route exact path="/"><Redirect to="/login" /></Route>
-      <Route exact path="/login"><Login /></Route>
-      <Route exact path="/register"><CreateUser /></Route>
-      <Route exact path="/customer/products" component={ Products } />
-      <Route exact path="/customer/checkout"><Checkout /></Route>
-    </Switch>
     <Routes>
       <Route path="/" element={ <Navigate to="/login" /> } />
       <Route path="/login" element={ <Login /> } />
       <Route path="/register" element={ <CreateUser /> } />
       <Route path="/customer/products" element={ <Products /> } />
+      <Route path="/customer/checkout" element={ <Checkout /> } />
     </Routes>
   );
 }
