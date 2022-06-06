@@ -22,11 +22,11 @@ module.exports = (sequelize) => {
 
     salesProducts.associate = (models) => {
         models.sale.belongsTo(
-            models.product, 
+            models.products, 
         data,
         );
    models.product.belongsTo(
-            models.sale, 
+            models.sales, 
             data2,
         );
         };
