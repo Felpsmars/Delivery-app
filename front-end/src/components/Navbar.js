@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../provider/UserProvider';
 
 const Navbar = () => {
-  const [ isLoading, setIsLoading ] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useContext(UserContext);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const Navbar = () => {
           <a
             data-testid="customer_products__element-navbar-link-logout"
             href="/"
-            onClick={() => logout()}
+            onClick={ () => logout() }
           >
             Sair
           </a>

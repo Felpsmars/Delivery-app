@@ -10,7 +10,7 @@ const Products = () => {
   const navigate = useNavigate();
   const { user, isUserValid } = useContext(UserContext);
   const { cartValue } = useContext(CartContext);
-  const [ products, setProducts ] = useState([]);
+  const [products, setProducts] = useState([]);
   const { REACT_APP_SERVER } = process.env;
 
   const fetchProducts = async () => {
@@ -32,31 +32,27 @@ const Products = () => {
 
   useEffect(() => {
     validateUser();
-  }, [ isUserValid ]);
+  }, [isUserValid]);
 
   return (
     <div>
+      <Navbar />
       {
-        <>
-          <Navbar />
-          {
-            products.map((prod, idx) => (
-              <ProductCard
-                key={`product-card-${idx}`}
-                obj={prod}
-              />))
-          }
-          <button
-            type="button"
-            data-testid="customer_products__button-cart"
-            onClick={ () => navigate('/customer/checkout') }
-            disabled={ cartValue === '0,00' }
-          >
-            Ver Carrinho R$
-            <span data-testid="customer_products__checkout-bottom-value">{cartValue}</span>
-          </button>
-        </>
+        products.map((prod, idx) => (
+          <ProductCard
+            key={ `product-card-${idx}` }
+            obj={ prod }
+          />))
       }
+      <button
+        type="button"
+        data-testid="customer_products__button-cart"
+        onClick={ () => navigate('/customer/checkout') }
+        disabled={ cartValue === '0,00' }
+      >
+        Ver Carrinho R$
+        <span data-testid="customer_products__checkout-bottom-value">{cartValue}</span>
+      </button>
     </div>
   );
 };

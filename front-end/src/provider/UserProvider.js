@@ -13,9 +13,9 @@ const UserProvider = ({ children }) => {
 
     if (currentUser) {
       const parsedUser = JSON.parse(currentUser);
-      setUser(parsedUser,);
+      setUser(parsedUser);
     }
-  }
+  };
 
   const validateUser = async () => {
     const { REACT_APP_SERVER } = process.env;
@@ -50,7 +50,7 @@ const UserProvider = ({ children }) => {
 
   const logout = () => {
     updateUser();
-  }
+  };
 
   useEffect(() => {
     fetchUser();
