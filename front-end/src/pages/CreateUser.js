@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../provider/UserProvider';
 
 const CreateUser = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [wrongLoginRegister, setWrongLoginRegister] = useState(false);
-  const history = useHistory();
+  const { updateUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const MIN_NAME_LENGTH = 12;
   const MIN_PASS_LENGTH = 6;
@@ -21,8 +23,8 @@ const CreateUser = () => {
         email,
         password,
       });
-      localStorage.setItem('user', JSON.stringify(request.data));
-      history.push('/customer/products');
+      updateUser(request.data.user);
+      navigate('/customer/products');
     } catch (error) {
       console.log(error);
       setWrongLoginRegister(true);

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../provider/UserProvider';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
-  const history = useHistory();
+  const { user, updateUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const MIN_PASS_LENGTH = 6;
   const emailCheck = email.match(/\S+@\S+\.\S+/);
@@ -19,10 +21,9 @@ const Login = () => {
         email,
         password,
       });
-      const { data: { user } } = request;
-      localStorage.setItem('user', JSON.stringify(user));
+      const { data: { user: newUser } } = request;
+      updateUser(newUser);
       setIsLogged(true);
-      return user;
     } catch (error) {
       console.log(error);
       setWrongLogin(true);
@@ -34,9 +35,12 @@ const Login = () => {
     && password.length >= MIN_PASS_LENGTH
   );
 
-  if (isLogged) {
-    history.push('/customer/products');
-  }
+  useEffect(() => {
+    console.log(isLogged);
+    if (isLogged) {
+      navigate('/customer/products');
+    }
+  }, [isLogged]);
 
   return (
     <form className="form-login">
@@ -81,7 +85,7 @@ const Login = () => {
         type="button"
         className="button"
         data-testid="common_login__button-register"
-        onClick={ () => history.push('/register') }
+        onClick={ () => navigate('/register') }
       >
         Register
       </button>

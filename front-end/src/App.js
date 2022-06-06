@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Route, Navigate, Routes } from 'react-router-dom';
 import './App.css';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import Login from './pages/Login';
 import Products from './pages/Products';
 import CreateUser from './pages/CreateUser';
@@ -8,41 +8,6 @@ import Checkout from './pages/Checkout';
 import axios from 'axios';
 
 function App() {
-  const history = useHistory();
-
-  const purgeUser = () => {
-    localStorage.removeItem('user');
-    history.push('/');
-  }
-
-  const validateToken = async () => {
-    const { REACT_APP_SERVER } = process.env;
-    const currentUserJSON = localStorage.getItem('user');
-
-    if (currentUserJSON) {
-      let currentUser;
-
-      try {
-        currentUser = JSON.parse(currentUserJSON);
-        const validation = await axios.get(`${REACT_APP_SERVER}/validateToken`, {
-          headers: {
-            'authorization': currentUser.token,
-          },
-        });
-  
-        if (validation.status === 401) purgeUser();
-      } catch (e) {
-        purgeUser();
-      }
-      
-      
-    }
-  }
-
-  useEffect(() => {
-    validateToken();
-  }, []);
-
   return (
     <Switch>
       <Route exact path="/"><Redirect to="/login" /></Route>
@@ -51,6 +16,12 @@ function App() {
       <Route exact path="/customer/products" component={ Products } />
       <Route exact path="/customer/checkout"><Checkout /></Route>
     </Switch>
+    <Routes>
+      <Route path="/" element={ <Navigate to="/login" /> } />
+      <Route path="/login" element={ <Login /> } />
+      <Route path="/register" element={ <CreateUser /> } />
+      <Route path="/customer/products" element={ <Products /> } />
+    </Routes>
   );
 }
 
