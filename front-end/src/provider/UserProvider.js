@@ -24,7 +24,6 @@ const UserProvider = ({ children }) => {
     const localStorageUser = localStorage.getItem('user');
 
     setIsUserValid(undefined);
-    console.log('User in validation: ', user.token);
     if (user.token) {
       const validation = await axios.get(`${REACT_APP_SERVER}/validateToken`, {
         headers: {

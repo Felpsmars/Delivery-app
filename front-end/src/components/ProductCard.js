@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { CartContext } from '../provider/CartProvider';
 
 const productCard = ({ obj }) => {
   const [quantity, setQuantity] = useState(0);
+  const { cart, setCart } = useContext(CartContext);
 
   const convertPrice = (originalPrice) => (
     originalPrice.replace('.', ',')
   );
 
-  const changeQuantity = (value) => (value >=0 && setQuantity(+value));
+  // cart = [{ name, price, quantity }]
+  const changeQuantity = (value) => {
+    if (value >= 0) setQuantity(+value);
+
+    const copyCart = [...cart];
+    
+    const productInCart = cart.findIndex((p) => p.name === obj.name);
+    console.log(productInCart)
+    if (productInCart !== -1) {
+      copyCart.splice(productInCart, 1);
+    }
+    setCart([
+      ...copyCart,
+      { ...obj, price: +obj.price, quantity: value } ]
+    );
+  };
 
   return (
     <div>

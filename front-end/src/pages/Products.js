@@ -4,10 +4,12 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
 import { UserContext } from '../provider/UserProvider';
+import { CartContext } from '../provider/CartProvider';
 
 const Products = () => {
   const navigate = useNavigate();
   const { user, isUserValid } = useContext(UserContext);
+  const { cartValue } = useContext(CartContext);
   const [ products, setProducts ] = useState([]);
   const { REACT_APP_SERVER } = process.env;
 
@@ -44,6 +46,15 @@ const Products = () => {
                 obj={prod}
               />))
           }
+          <button
+            type="button"
+            data-testid="customer_products__button-cart"
+            onClick={ () => navigate('/customer/checkout') }
+            disabled={ cartValue === '0,00' }
+          >
+            Ver Carrinho R$
+            <span data-testid="customer_products__checkout-bottom-value">{cartValue}</span>
+          </button>
         </>
       }
     </div>
