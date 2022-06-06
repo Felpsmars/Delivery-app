@@ -14,13 +14,13 @@ const data2 = {
 };
 
 module.exports = (sequelize, DataTypes) => {
-    const salesProducts = sequelize.define('sales_products', {
+    const salesProducts = sequelize.define('SalesProducts', {
         quantity: {
             type: DataTypes.INTEGER,
             allowNull: false,
         }
     }, {
-        underscored: false,
+        underscored: true,
         timestamps: false,
         tableName: 'salesProducts',
     });
