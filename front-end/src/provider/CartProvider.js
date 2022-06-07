@@ -10,9 +10,15 @@ const CartProvider = () => {
     (acc, cur) => (acc + (cur.price * cur.quantity)), 0,
   ).toFixed(2).split('.').join(',');
 
+  const removeItem = (id) => {
+    const newCart = cart.filter((e) => e.id !== id );
+    setCart(newCart);
+  }
+
   const value = {
     cart,
     setCart,
+    removeItem,
     cartValue,
   };
 

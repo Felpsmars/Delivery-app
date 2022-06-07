@@ -14,8 +14,9 @@ function App() {
       <Route path="/" element={ <Navigate to="/login" /> } />
       <Route path="/login" element={ <Login /> } />
       <Route path="/register" element={ <CreateUser /> } />
-      <Route path="/customer" element={ <CartProvider /> }>
+      <Route path="/customer" element={ <CartProvider /> } >
         <Route path="products" element={ <Products /> } />
+        <Route path="checkout" element={ <Checkout /> } />
       </Route>
     </Routes>
   );

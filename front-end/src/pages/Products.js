@@ -36,7 +36,7 @@ const Products = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar pageName={'Produtos'}/>
       {
         products.map((prod, idx) => (
           <ProductCard

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../provider/UserProvider';
 
-const Navbar = () => {
+const Navbar = ({ pageName }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useContext(UserContext);
 
-  const urlStringPageName = (pageName) => {
-    switch (pageName) {
+  const urlStringPageName = (url) => {
+    switch (url) {
     case 'Produtos':
       return 'products';
 
@@ -27,7 +27,9 @@ const Navbar = () => {
       <ul className="navbar">
         <li>
           <a
-            data-testid={ `customer_products__element-navbar-link-${pageName}` }
+            data-testid={
+              `customer_products__element-navbar-link-${urlStringPageName(pageName)}`
+            }
             href={ `/customer/${urlStringPageName(pageName)}` }
           >
             {pageName}
@@ -60,6 +62,14 @@ const Navbar = () => {
       </ul>
     )
   );
+};
+
+Navbar.defaultProps = {
+  pageName: 'Produtos',
+};
+
+Navbar.propTypes = {
+  pageName: PropTypes.string,
 };
 
 export default Navbar;
