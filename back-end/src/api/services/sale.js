@@ -16,14 +16,15 @@ const getAll = async (userId) => (
   Sale.findAll({ where: { userId } })
 );
 
-const create = async (data, products) => {
+const create = async ({ products, ...data }) => {
   const t = await db.sequelize.transaction();
-
+  console.log(products, data)
   try {
     const { dataValues: sale } = await Sale.create({ ...data });
     await createProductAssociation(sale.id, products);
-
     await t.commit();
+
+    return { ...sale, products };
   } catch (e) {
     await t.rollback();
     throw e;

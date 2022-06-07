@@ -1,23 +1,24 @@
 const { Router } = require('express');
 
 const saleController = require('../controllers/sale');
+const saleMiddleware = require('../middlewares/sale');
 
-const productRouter = Router();
+const saleRouter = Router();
 
-productRouter.route('/sale')
+saleRouter.route('/sale')
     .post(
-
+        saleMiddleware.validateCreate,
         saleController.create,
     );
 
-productRouter.route('/sale/:userId')
+saleRouter.route('/sale/:userId')
     .get(
         saleController.getAll,
     );
 
-productRouter.route('/delivered/:id')
+saleRouter.route('/delivered/:id')
     .patch(
         saleController.saleDelivered,
     );
 
-module.exports = productRouter;
+module.exports = saleRouter;
