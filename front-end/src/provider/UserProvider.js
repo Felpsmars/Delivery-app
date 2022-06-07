@@ -5,37 +5,43 @@ import axios from 'axios';
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState({});
+  const [isUserValid, setIsUserValid] = useState(undefined);
 
-  const validateUser = async () => {
-    const { REACT_APP_SERVER } = process.env;
-    const UNAUTHORIZED = 401;
+  const fetchUser = async () => {
     const currentUser = localStorage.getItem('user');
 
-    if (currentUser) {
-      const parsedUser = JSON.parse(currentUser);
-      const validation = await axios.get(`${REACT_APP_SERVER}/validateToken`, {
-        headers: {
-          authorization: parsedUser.token,
-        },
-      });
-      if (validation.status === UNAUTHORIZED) return false;
-      return true;
-    }
-    return false;
-  };
-
-  const fetchUser = () => {
-    const currentUser = localStorage.getItem('user');
     if (currentUser) {
       const parsedUser = JSON.parse(currentUser);
       setUser(parsedUser);
     }
   };
 
+  const validateUser = async () => {
+    const { REACT_APP_SERVER } = process.env;
+    const UNAUTHORIZED = 401;
+
+    const localStorageUser = localStorage.getItem('user');
+
+    setIsUserValid(undefined);
+    if (user.token) {
+      const validation = await axios.get(`${REACT_APP_SERVER}/validateToken`, {
+        headers: {
+          authorization: user.token,
+        },
+      });
+      if (validation.status === UNAUTHORIZED) setIsUserValid(false);
+      else setIsUserValid(true);
+    } else if (!localStorageUser) {
+      setIsUserValid(false);
+    }
+  };
+
   const updateUser = (newUser) => {
+    setIsUserValid(undefined);
     if (!newUser) {
       localStorage.removeItem('user');
+      setUser({});
     } else {
       localStorage.setItem('user', JSON.stringify(newUser));
       setUser(newUser);
@@ -43,7 +49,6 @@ const UserProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(undefined);
     updateUser();
   };
 
@@ -51,11 +56,15 @@ const UserProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    validateUser();
+  }, [user]);
+
   const value = {
     user,
     updateUser,
-    validateUser,
     logout,
+    isUserValid,
   };
 
   return (

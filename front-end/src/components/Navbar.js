@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../provider/UserProvider';
 
-const Navbar = ({ pageName }) => {
+const Navbar = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useContext(UserContext);
 

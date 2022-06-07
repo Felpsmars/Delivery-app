@@ -4,12 +4,13 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
 import { UserContext } from '../provider/UserProvider';
+import { CartContext } from '../provider/CartProvider';
 
 const Products = () => {
   const navigate = useNavigate();
+  const { user, isUserValid } = useContext(UserContext);
+  const { cartValue } = useContext(CartContext);
   const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { user, validateUser: isUserValid, updateUser } = useContext(UserContext);
   const { REACT_APP_SERVER } = process.env;
 
   const fetchProducts = async () => {
@@ -21,38 +22,37 @@ const Products = () => {
     setProducts(result.data);
   };
 
-  const validateUser = async () => {
-    const validation = await isUserValid();
-    if (!validation) {
-      updateUser();
+  const validateUser = () => {
+    if (isUserValid === false) {
       navigate('/');
+    } else if (isUserValid) {
+      fetchProducts();
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (user) fetchProducts();
     validateUser();
-  }, [fetchProducts, user, validateUser]);
+  }, [isUserValid]);
 
   return (
     <div>
+      <Navbar />
       {
-        isLoading ? (
-          <p>Aguarde um momento...</p>
-        ) : (
-          <>
-            <Navbar pageName="Produtos" />
-            {
-              products.map((prod, idx) => (
-                <ProductCard
-                  key={ `product-card-${idx}` }
-                  obj={ prod }
-                />))
-            }
-          </>
-        )
+        products.map((prod, idx) => (
+          <ProductCard
+            key={ `product-card-${idx}` }
+            obj={ prod }
+          />))
       }
+      <button
+        type="button"
+        data-testid="customer_products__button-cart"
+        onClick={ () => navigate('/customer/checkout') }
+        disabled={ cartValue === '0,00' }
+      >
+        Ver Carrinho R$
+        <span data-testid="customer_products__checkout-bottom-value">{cartValue}</span>
+      </button>
     </div>
   );
 };

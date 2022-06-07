@@ -37,11 +37,6 @@ const CreateUser = () => {
     && emailCheck
   );
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    create();
-  };
-
   return (
     <form className="form-login">
       <label className="label" htmlFor="email">
@@ -87,8 +82,8 @@ const CreateUser = () => {
       </label>
 
       <button
-        type="submit"
-        onClick={ handleClick }
+        type="button"
+        onClick={ create }
         className="button"
         data-testid="common_register__button-register"
         disabled={ !areFieldsValid }

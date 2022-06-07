@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
-  const { user, updateUser } = useContext(UserContext);
+  const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const MIN_PASS_LENGTH = 6;
@@ -36,7 +36,6 @@ const Login = () => {
   );
 
   useEffect(() => {
-    console.log(isLogged);
     if (isLogged) {
       navigate('/customer/products');
     }

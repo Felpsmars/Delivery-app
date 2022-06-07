@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+import { CartContext } from '../provider/CartProvider';
 
-const productCard = ({ obj }) => {
+const ProductCard = ({ obj }) => {
   const [quantity, setQuantity] = useState(0);
+  const { cart, setCart } = useContext(CartContext);
 
   const convertPrice = (originalPrice) => (
     originalPrice.replace('.', ',')
   );
 
-  const changeQuantity = (value) => (value >= 0 && setQuantity(+value));
+  const changeQuantity = (value) => {
+    const INDEX_NOT_FOUND = -1;
+    if (value >= 0) setQuantity(+value);
+
+    const copyCart = [...cart];
+
+    const productInCart = cart.findIndex((p) => p.name === obj.name);
+    console.log(productInCart);
+    if (productInCart !== INDEX_NOT_FOUND) {
+      copyCart.splice(productInCart, 1);
+    }
+    setCart([
+      ...copyCart,
+      { ...obj, price: +obj.price, quantity: value }]);
+  };
 
   return (
     <div>
@@ -17,7 +34,7 @@ const productCard = ({ obj }) => {
       <img
         data-testid={ `customer_products__img-card-bg-image-${obj.id}` }
         src={ `${obj.urlImage}` }
-        alt={ `product-image-${obj.id}` }
+        alt={ `product-img-${obj.id}` }
       />
       <p data-testid={ `customer_products__element-card-title-${obj.id}` }>
         {obj.name}
@@ -48,4 +65,8 @@ const productCard = ({ obj }) => {
   );
 };
 
-export default productCard;
+ProductCard.propTypes = {
+  obj: PropTypes.objectOf(PropTypes.string || PropTypes.number).isRequired,
+};
+
+export default ProductCard;
