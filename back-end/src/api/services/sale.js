@@ -30,4 +30,9 @@ const create = async (data, products) => {
   }
 };
 
-module.exports = { getAll, create };
+const saleDelivered = async (id) => {
+   const response = await Sale.update({ status: 'Entregue' }, { where: { id } });
+    return response;
+  };
+
+module.exports = { getAll, create, saleDelivered };
