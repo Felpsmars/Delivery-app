@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 export const CartContext = createContext();
 
-const CartProvider = () => {
+const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
   const cartValue = cart.reduce(
@@ -27,7 +27,7 @@ const CartProvider = () => {
 
   return (
     <CartContext.Provider value={ value }>
-      <Outlet />
+      { children }
     </CartContext.Provider>
   );
 };

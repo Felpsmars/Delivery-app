@@ -4,6 +4,10 @@ import { CartContext } from '../provider/CartProvider';
 const ProductTable = () => {
   const { cart, removeItem } = useContext(CartContext);
 
+  const convertNumberToPrice = (number) => (
+    `R$ ${number.toFixed(2).split('.').join(',')}`
+  );
+
   return (
     <table>
       <thead>
@@ -33,10 +37,10 @@ const ProductTable = () => {
               {e.quantity}
             </td>
             <td data-testid={ `customer_checkout__element-order-table-unit-price-${i}` }>
-              {e.price}
+              { convertNumberToPrice(e.price) }
             </td>
             <td data-testid={ `customer_checkout__element-order-table-sub-total-${i}` }>
-              {e.quantity * e.price}
+              { convertNumberToPrice(e.quantity * e.price) }
             </td>
             <td>
               <button

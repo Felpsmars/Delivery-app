@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../provider/UserProvider';
 import { CartContext } from '../provider/CartProvider';
+import { SalesContext } from '../provider/SalesProvider';
 
 const CheckoutFinish = () => {
-  const { sellers, user } = useContext(UserContext);
-  const { cart, cartValue } = useContext(CartContext);
+  const { sellers } = useContext(UserContext);
+  const { cart } = useContext(CartContext);
+  const { postSale } = useContext(SalesContext);
+  const navigate = useNavigate();
   const [details, setDetails] = useState({
     sellerId: undefined,
     deliveryAddress: '',
@@ -23,17 +26,8 @@ const CheckoutFinish = () => {
   );
 
   const handleFinish = async () => {
-    const { REACT_APP_SERVER } = process.env;
-    try {
-      await axios.post(`${REACT_APP_SERVER}/sale`, {
-        userId: user.id,
-        totalPrice: cartValue,
-        products: cart,
-        ...details,
-      });
-    } catch (e) {
-      console.log('Error while creating sale ', e.message);
-    }
+    const response = await postSale(details);
+    if (response) navigate(`/customer/orders/${response.id}`);
   };
 
   useEffect(() => {
@@ -85,6 +79,7 @@ const CheckoutFinish = () => {
         />
       </label>
       <button
+        data-testid="customer_checkout__button-submit-order"
         type="button"
         onClick={ handleFinish }
         disabled={ !areFieldsValid }
