@@ -26,7 +26,7 @@ module.exports = {
         },
       },
       total_price: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(5,2),
         allowNull: false,
       },
       delivery_address: {
