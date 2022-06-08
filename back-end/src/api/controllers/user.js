@@ -13,4 +13,8 @@ const create = async (req, res) => {
     return res.status(201).json({ user });
 };
 
-module.exports = { login, create };
+const validateToken = async (_req, res) => res.status(200).json({
+        message: 'Token validated successfully!',
+    });
+
+module.exports = { login, create, validateToken };

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../provider/UserProvider';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
-  const history = useHistory();
+  const { updateUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const MIN_PASS_LENGTH = 6;
   const emailCheck = email.match(/\S+@\S+\.\S+/);
@@ -19,19 +21,13 @@ const Login = () => {
         email,
         password,
       });
-      const { data: { user } } = request;
+      const { data: { user: newUser } } = request;
+      updateUser(newUser);
       setIsLogged(true);
-      return user.token;
     } catch (error) {
       console.log(error);
       setWrongLogin(true);
     }
-  };
-
-  const handleLogin = async () => {
-    const response = await login();
-    localStorage.setItem('user', response);
-    console.log(response);
   };
 
   const areFieldsValid = (
@@ -39,9 +35,11 @@ const Login = () => {
     && password.length >= MIN_PASS_LENGTH
   );
 
-  if (isLogged) {
-    history.push('/customer/products');
-  }
+  useEffect(() => {
+    if (isLogged) {
+      navigate('/customer/products');
+    }
+  }, [isLogged]);
 
   return (
     <form className="form-login">
@@ -75,7 +73,7 @@ const Login = () => {
 
       <button
         type="button"
-        onClick={ handleLogin }
+        onClick={ login }
         className="button"
         data-testid="common_login__button-login"
         disabled={ !areFieldsValid }
@@ -86,7 +84,7 @@ const Login = () => {
         type="button"
         className="button"
         data-testid="common_login__button-register"
-        onClick={ () => history.push('/register') }
+        onClick={ () => navigate('/register') }
       >
         Register
       </button>

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../provider/UserProvider';
 
 const CreateUser = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [wrongLoginRegister, setWrongLoginRegister] = useState(false);
-  const history = useHistory();
+  const { updateUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const MIN_NAME_LENGTH = 12;
   const MIN_PASS_LENGTH = 6;
@@ -21,8 +23,8 @@ const CreateUser = () => {
         email,
         password,
       });
-      console.log(request);
-      history.push('/customer/products');
+      updateUser(request.data.user);
+      navigate('/customer/products');
     } catch (error) {
       console.log(error);
       setWrongLoginRegister(true);
@@ -34,11 +36,6 @@ const CreateUser = () => {
     && password.length >= MIN_PASS_LENGTH
     && emailCheck
   );
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    create();
-  };
 
   return (
     <form className="form-login">
@@ -85,8 +82,8 @@ const CreateUser = () => {
       </label>
 
       <button
-        type="submit"
-        onClick={ handleClick }
+        type="button"
+        onClick={ create }
         className="button"
         data-testid="common_register__button-register"
         disabled={ !areFieldsValid }
@@ -99,7 +96,6 @@ const CreateUser = () => {
           data-testid="common_register__element-invalid_register"
         >
           MESSAGE
-
         </p>)}
     </form>
   );

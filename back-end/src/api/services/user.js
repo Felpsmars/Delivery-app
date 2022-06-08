@@ -4,7 +4,7 @@ const { generateToken, hashPassword } = require('../utils/auth');
 const ERRORS = require('../utils/error');
 
 const getPublicUser = (modelUser) => {
-    const { password, ...publicUser } = modelUser.dataValues;
+    const { id, password, ...publicUser } = modelUser.dataValues;
     return publicUser;
 };
 
@@ -24,8 +24,7 @@ const login = async ({ email, password }) => {
     }
     
     const token = await generateToken({ email });
-    const { dataValues: { role } } = findOneWithPassword;
-    return { token, role };
+    return { token, ...getPublicUser(findOneWithPassword) };
 };
 
 const create = async ({ name, email, password }) => {
@@ -39,6 +38,8 @@ const create = async ({ name, email, password }) => {
     const hashedPassword = hashPassword(password);
     if (findOneUser) throw ERRORS.USER.ALREADY_EXISTS;
     const user = await User.create({ name, email, password: hashedPassword, role: 'customer' }); 
-    return getPublicUser(user);
+    const token = await generateToken({ email: user.email });
+    
+    return { token, ...getPublicUser(user) };
 };
 module.exports = { login, create };
