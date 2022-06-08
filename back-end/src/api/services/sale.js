@@ -18,7 +18,7 @@ const getAll = async (userId) => (
 
 const create = async ({ products, ...data }) => {
   const t = await db.sequelize.transaction();
-  console.log(products, data)
+
   try {
     const { dataValues: sale } = await Sale.create({ ...data });
     await createProductAssociation(sale.id, products);

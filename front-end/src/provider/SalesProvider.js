@@ -1,5 +1,5 @@
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { createContext, useContext, useEffect, useState } from 'react';
 import { CartContext } from './CartProvider';
 import { UserContext } from './UserProvider';
 
@@ -46,7 +46,7 @@ const SalesProvider = ({ children }) => {
   useEffect(() => {
     if (user.token) fetchSales();
   }, [user]);
-  
+
   const value = {
     sales,
     setSales,
@@ -54,10 +54,14 @@ const SalesProvider = ({ children }) => {
   };
 
   return (
-    <SalesContext.Provider value={value}>
+    <SalesContext.Provider value={ value }>
       { children }
     </SalesContext.Provider>
   );
-}
+};
+
+SalesProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+};
 
 export default SalesProvider;

@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export const CartContext = createContext();
 
@@ -30,6 +30,10 @@ const CartProvider = ({ children }) => {
       { children }
     </CartContext.Provider>
   );
+};
+
+CartProvider.propTypes = {
+  children: PropTypes.element.isRequired,
 };
 
 export default CartProvider;

@@ -5,7 +5,7 @@ const getAllByRole = async (req, res) => {
     const users = await userService.getAllByRole(role);
 
     return res.status(200).json(users);
-}
+};
 
 const login = async (req, res) => {
     const { email, password } = req.body;
