@@ -8,6 +8,11 @@ const getPublicUser = (modelUser) => {
     return publicUser;
 };
 
+const getAll = async (filter) => {
+    const response = await User.findAll({ where: { ...filter } });
+    return response.map((user) => getPublicUser(user));
+};
+
 const login = async ({ email, password }) => {
     const passwordHash = hashPassword(password);
 
@@ -42,4 +47,4 @@ const create = async ({ name, email, password }) => {
     
     return { token, ...getPublicUser(user) };
 };
-module.exports = { login, create };
+module.exports = { getAll, login, create };

@@ -1,5 +1,12 @@
 const userService = require('../services/user');
 
+const getAll = async (req, res) => {
+    const { filter } = res.locals;
+    const users = await userService.getAll(filter);
+
+    return res.status(200).json(users);
+}
+
 const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await userService.login({ email, password });
@@ -14,7 +21,7 @@ const create = async (req, res) => {
 };
 
 const validateToken = async (_req, res) => res.status(200).json({
-        message: 'Token validated successfully!',
-    });
+    message: 'Token validated successfully!',
+});
 
-module.exports = { login, create, validateToken };
+module.exports = { getAll, login, create, validateToken };

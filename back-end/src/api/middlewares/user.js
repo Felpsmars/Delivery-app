@@ -1,5 +1,11 @@
 const userSchema = require('../schemas/user');
 
+const validateGetAll = async (req, res, next) => {
+    const filter = await userSchema.getAll.validateAsync(req.body);
+    res.locals = { filter };
+    return next();
+};
+
 const validateLogin = async (req, _res, next) => {
     const { email, password } = req.body;
     await userSchema.login.validateAsync({ email, password });
@@ -12,4 +18,4 @@ const validateCreate = async (req, _res, next) => {
     return next();
 };
 
-module.exports = { validateLogin, validateCreate };
+module.exports = { validateGetAll, validateLogin, validateCreate };
