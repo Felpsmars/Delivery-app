@@ -6,11 +6,11 @@ const authMiddleware = require('../middlewares/auth');
 
 const userRouter = Router();
 
-userRouter.route('/user')
+userRouter.route('/user/:role')
     .get(
         authMiddleware.validateToken,
-        userMiddleware.validateGetAll,
-        userController.getAll,
+        userMiddleware.validateGetAllByRole,
+        userController.getAllByRole,
     );
 
 userRouter.route('/')

@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
-const getAll = Joi.object({
-    role: Joi.string(),
+const getAllByRole = Joi.object({
+    role: Joi.string().required(),
 });
 
 const login = Joi.object({
@@ -15,4 +15,4 @@ const create = Joi.object({
     password: Joi.string().required().min(6),
 });
 
-module.exports = { getAll, login, create };
+module.exports = { getAllByRole, login, create };

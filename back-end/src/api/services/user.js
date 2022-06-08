@@ -4,12 +4,12 @@ const { generateToken, hashPassword } = require('../utils/auth');
 const ERRORS = require('../utils/error');
 
 const getPublicUser = (modelUser) => {
-    const { id, password, ...publicUser } = modelUser.dataValues;
+    const { password, ...publicUser } = modelUser.dataValues;
     return publicUser;
 };
 
-const getAll = async (filter) => {
-    const response = await User.findAll({ where: { ...filter } });
+const getAllByRole = async (role) => {
+    const response = await User.findAll({ where: { role } });
     return response.map((user) => getPublicUser(user));
 };
 
@@ -47,4 +47,4 @@ const create = async ({ name, email, password }) => {
     
     return { token, ...getPublicUser(user) };
 };
-module.exports = { getAll, login, create };
+module.exports = { getAllByRole, login, create };

@@ -1,8 +1,7 @@
 const userSchema = require('../schemas/user');
 
-const validateGetAll = async (req, res, next) => {
-    const filter = await userSchema.getAll.validateAsync(req.body);
-    res.locals = { filter };
+const validateGetAllByRole = async (req, res, next) => {
+    await userSchema.getAllByRole.validateAsync(req.params);
     return next();
 };
 
@@ -18,4 +17,4 @@ const validateCreate = async (req, _res, next) => {
     return next();
 };
 
-module.exports = { validateGetAll, validateLogin, validateCreate };
+module.exports = { validateGetAllByRole, validateLogin, validateCreate };
