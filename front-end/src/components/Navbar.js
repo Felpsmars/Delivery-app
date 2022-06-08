@@ -1,9 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { UserContext } from '../provider/UserProvider';
 
-const Navbar = () => {
+const Navbar = ({ pageName }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useContext(UserContext);
+
+  const urlStringPageName = (url) => {
+    switch (url) {
+    case 'Produtos':
+      return 'products';
+
+    default:
+      return '';
+    }
+  };
 
   useEffect(() => {
     if (user) setIsLoading(false);
@@ -13,13 +24,16 @@ const Navbar = () => {
     isLoading ? (
       <p>Carregando Navbar...</p>
     ) : (
+
       <ul className="navbar">
         <li>
           <a
-            data-testid="customer_products__element-navbar-link-products"
-            href="/customer/products"
+            data-testid={
+              `customer_products__element-navbar-link-${urlStringPageName(pageName)}`
+            }
+            href={ `/customer/${urlStringPageName(pageName)}` }
           >
-            Produtos
+            {pageName}
           </a>
         </li>
         <li>
@@ -49,6 +63,14 @@ const Navbar = () => {
       </ul>
     )
   );
+};
+
+Navbar.defaultProps = {
+  pageName: 'Produtos',
+};
+
+Navbar.propTypes = {
+  pageName: PropTypes.string,
 };
 
 export default Navbar;

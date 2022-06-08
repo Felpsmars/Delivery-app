@@ -9,7 +9,7 @@ import { CartContext } from '../provider/CartProvider';
 const Products = () => {
   const navigate = useNavigate();
   const { user, isUserValid } = useContext(UserContext);
-  const { cartValue } = useContext(CartContext);
+  const { cartValue, cartValueComma } = useContext(CartContext);
   const [products, setProducts] = useState([]);
   const { REACT_APP_SERVER } = process.env;
 
@@ -24,6 +24,7 @@ const Products = () => {
 
   const validateUser = () => {
     if (isUserValid === false) {
+      updateUser();
       navigate('/');
     } else if (isUserValid) {
       fetchProducts();
@@ -36,7 +37,7 @@ const Products = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar pageName="Produtos" />
       {
         products.map((prod, idx) => (
           <ProductCard
@@ -48,10 +49,12 @@ const Products = () => {
         type="button"
         data-testid="customer_products__button-cart"
         onClick={ () => navigate('/customer/checkout') }
-        disabled={ cartValue === '0,00' }
+        disabled={ cartValue === '0.00' }
       >
         Ver Carrinho R$
-        <span data-testid="customer_products__checkout-bottom-value">{cartValue}</span>
+        <span data-testid="customer_products__checkout-bottom-value">
+          {cartValueComma}
+        </span>
       </button>
     </div>
   );

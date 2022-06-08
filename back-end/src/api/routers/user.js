@@ -5,6 +5,14 @@ const userMiddleware = require('../middlewares/user');
 const authMiddleware = require('../middlewares/auth');
 
 const userRouter = Router();
+
+userRouter.route('/user/:role')
+    .get(
+        authMiddleware.validateToken,
+        userMiddleware.validateGetAllByRole,
+        userController.getAllByRole,
+    );
+
 userRouter.route('/')
     .post(
         userMiddleware.validateLogin,
@@ -22,7 +30,7 @@ userRouter.route('/register')
         userMiddleware.validateCreate,
         userController.create,
     );
-
+    
 userRouter.route('/validateToken')
     .get(
         authMiddleware.validateToken,

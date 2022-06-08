@@ -22,9 +22,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     saleDate: {
       type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
     status: {
       type: DataTypes.STRING,
+      defaultValue: "Pendente"
     },
   }, {
     timestamps: false,

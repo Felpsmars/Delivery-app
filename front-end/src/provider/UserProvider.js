@@ -6,6 +6,7 @@ export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [sellers, setSellers] = useState([]);
   const [isUserValid, setIsUserValid] = useState(undefined);
 
   const fetchUser = async () => {
@@ -17,22 +18,39 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  const validateUser = async () => {
+  const fetchSellers = async () => {
     const { REACT_APP_SERVER } = process.env;
-    const UNAUTHORIZED = 401;
 
-    const localStorageUser = localStorage.getItem('user');
-
-    setIsUserValid(undefined);
-    if (user.token) {
-      const validation = await axios.get(`${REACT_APP_SERVER}/validateToken`, {
+    try {
+      const response = await axios.get(`${REACT_APP_SERVER}/user/seller`, {
         headers: {
           authorization: user.token,
         },
       });
-      if (validation.status === UNAUTHORIZED) setIsUserValid(false);
-      else setIsUserValid(true);
-    } else if (!localStorageUser) {
+      setSellers(response.data);
+    } catch (e) {
+      console.log('Error while fetching sellers ', e.message);
+    }
+  };
+
+  const validateUser = async () => {
+    const { REACT_APP_SERVER } = process.env;
+
+    const localStorageUser = localStorage.getItem('user');
+
+    setIsUserValid(undefined);
+    try {
+      if (user.token) {
+        await axios.get(`${REACT_APP_SERVER}/validateToken`, {
+          headers: {
+            authorization: user.token,
+          },
+        });
+        setIsUserValid(true);
+      } else if (!localStorageUser) {
+        setIsUserValid(false);
+      }
+    } catch (e) {
       setIsUserValid(false);
     }
   };
@@ -58,10 +76,12 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     validateUser();
+    if (user.token) fetchSellers();
   }, [user]);
 
   const value = {
     user,
+    sellers,
     updateUser,
     logout,
     isUserValid,
@@ -69,7 +89,7 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider value={ value }>
-      { children }
+      {children}
     </UserContext.Provider>
   );
 };
