@@ -15,9 +15,8 @@ const ProductCard = ({ obj }) => {
     if (value >= 0) setQuantity(+value);
 
     const copyCart = [...cart];
-
     const productInCart = cart.findIndex((p) => p.name === obj.name);
-    console.log(productInCart);
+
     if (productInCart !== INDEX_NOT_FOUND) {
       copyCart.splice(productInCart, 1);
     }
@@ -66,7 +65,9 @@ const ProductCard = ({ obj }) => {
 };
 
 ProductCard.propTypes = {
-  obj: PropTypes.objectOf(PropTypes.string || PropTypes.number).isRequired,
+  obj: PropTypes.objectOf(PropTypes.oneOfType(
+    [PropTypes.number, PropTypes.string],
+  )).isRequired,
 };
 
 export default ProductCard;

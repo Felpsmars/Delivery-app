@@ -8,18 +8,21 @@ const CartProvider = () => {
 
   const cartValue = cart.reduce(
     (acc, cur) => (acc + (cur.price * cur.quantity)), 0,
-  ).toFixed(2).split('.').join(',');
+  ).toFixed(2);
+
+  const cartValueComma = cartValue.split('.').join(',');
 
   const removeItem = (id) => {
-    const newCart = cart.filter((e) => e.id !== id );
+    const newCart = cart.filter((e) => e.id !== id);
     setCart(newCart);
-  }
+  };
 
   const value = {
     cart,
     setCart,
     removeItem,
     cartValue,
+    cartValueComma,
   };
 
   return (

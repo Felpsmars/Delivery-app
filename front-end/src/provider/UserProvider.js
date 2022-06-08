@@ -5,8 +5,9 @@ import axios from 'axios';
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [ user, setUser ] = useState({});
-  const [ isUserValid, setIsUserValid ] = useState(undefined);
+  const [user, setUser] = useState({});
+  const [sellers, setSellers] = useState([]);
+  const [isUserValid, setIsUserValid] = useState(undefined);
 
   const fetchUser = async () => {
     const currentUser = localStorage.getItem('user');
@@ -14,6 +15,21 @@ const UserProvider = ({ children }) => {
     if (currentUser) {
       const parsedUser = JSON.parse(currentUser);
       setUser(parsedUser);
+    }
+  };
+
+  const fetchSellers = async () => {
+    const { REACT_APP_SERVER } = process.env;
+
+    try {
+      const response = await axios.get(`${REACT_APP_SERVER}/user/seller`, {
+        headers: {
+          authorization: user.token,
+        },
+      });
+      setSellers(response.data);
+    } catch (e) {
+      console.log('Error while fetching sellers ', e.message);
     }
   };
 
@@ -60,17 +76,19 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     validateUser();
-  }, [ user ]);
+    if (user.token) fetchSellers();
+  }, [user]);
 
   const value = {
     user,
+    sellers,
     updateUser,
     logout,
     isUserValid,
   };
 
   return (
-    <UserContext.Provider value={value}>
+    <UserContext.Provider value={ value }>
       {children}
     </UserContext.Provider>
   );
