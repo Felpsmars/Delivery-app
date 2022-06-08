@@ -20,7 +20,9 @@ Projeto desenvolvido durante o módulo de back-end do curso da Trybe.
 
         {
             "user": {
-                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsImlhdCI6MTY1NDE5MjEzNywiZXhwIjoxNjU0Mjc4NTM3fQ.9xxWgNdnnSk9QVWJ5XiRtNDwcqlVwjCSOo2u2HHvknY",
+                "name": "Cliente Zé Birita",
+                "email": "zebirita@email.com"
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsImlhdCI6MTY1NDI5NzIxMSwiZXhwIjoxNjU0MzgzNjExfQ.g3_T6dgoNotgaDwKsF9kwljDrCgi8c5-ihCt3n12tP8",
                 "role": "customer" (customer | seller | administrator)
             }
         }
@@ -39,10 +41,10 @@ Projeto desenvolvido durante o módulo de back-end do curso da Trybe.
 
         {
             "user": {
-                "id": 4,
                 "name": "Isaac Batista",
-                "email": "isaac.batista@gmail.com",
-                "role": "customer"
+                "email": "isaac.batista@gmail.com"
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsImlhdCI6MTY1NDI5NzIxMSwiZXhwIjoxNjU0MzgzNjExfQ.g3_T6dgoNotgaDwKsF9kwljDrCgi8c5-ihCt3n12tP8",
+                "role": "customer" (customer | seller | administrator)
             }
         }
         
@@ -92,4 +94,74 @@ Projeto desenvolvido durante o módulo de back-end do curso da Trybe.
             "name": "Skol Lata 250ml",
             "price": "2",
             "urlImage": "http://localhost:3001/images/skol_lata_350ml.jpg"
+        }
+        
+## Rotas de Vendas [/sale]
+
+### Listar Todos por ID do usuário [GET /sale/{userId}]
+
++ Request (application/json)
+    + Headers
+        
+            Authorization: JWT Token
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "userId": 3,
+                "sellerId": 2,
+                "totalPrice": "150",
+                "deliveryAddress": "Rua Teste",
+                "deliveryNumber": "187",
+                "saleDate": "2022-06-07T23:04:08.000Z",
+                "status": "Pendente"
+            },
+            {
+                "id": 2,
+                "userId": 3,
+                "sellerId": 2,
+                "totalPrice": "150",
+                "deliveryAddress": "Rua Teste",
+                "deliveryNumber": "187",
+                "saleDate": "2022-06-07T23:05:59.000Z",
+                "status": "Pendente"
+            },
+        ]
+
+### Criar Venda [POST]
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: JWT Token
+
+    + Body
+
+        {
+            "userId": 3,
+            "sellerId": 2,
+            "totalPrice": 150,
+            "products": [
+                { "id": 1, "quantity": 2 },
+                { "id": 2, "quantity": 3 }
+            ],
+            "deliveryAddress": "Rua Teste",
+            "deliveryNumber": 187
+        }
+    
+
++ Response 201 (application/json)
+
+        {
+            "userId": 3,
+            "sellerId": 2,
+            "totalPrice": 150,
+            "products": [
+                { "id": 1, "quantity": 2 },
+                { "id": 2, "quantity": 3 }
+            ],
+            "deliveryAddress": "Rua Teste",
+            "deliveryNumber": 187
         }

@@ -39,11 +39,13 @@ module.exports = {
       },
       sale_date: {
         type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
         allowNull: false,
       },
       status: {
         type: Sequelize.STRING,
         allowNull: false,
+        defaultValue: 'Pendente'
       },
     });
   },
