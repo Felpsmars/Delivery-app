@@ -14,16 +14,18 @@ function SellerOrder() {
   const fetchOrders = async () => {
     const { id } = user;
     try {
-    const result = await axios.get(`${REACT_APP_SERVER}/sale/seller/${id}`, {
+      const result = axios.get(`${REACT_APP_SERVER}/sale/seller/${id}`, {
         headers: {
           Authorization: user.token,
         },
       });
-      console.log(result.data);
-      setOrders(result.data);
-        
+      const response = await result;
+      console.log(response.data);
+      setOrders(response.data);
+      console.log(orders)
+
     } catch (error) {
-        console.log('error fetching orders');
+      console.log('error fetching orders');
     }
   };
 
@@ -40,19 +42,26 @@ function SellerOrder() {
     validateUser();
   }, [isUserValid]);
 
-    return (
-        <div>
-            <div><Navbar pageName='Pedidos' /></div>
-            <div>
-                {
-                    orders.forEach(element => {
-                        <OrderCard order={ element }/>
-                    })
-                }
-            </div>
+  return (
+    <div>
+      <Navbar pageName='Pedidos' />
+      <div>
+        {orders.map(({ id, status, deliveryAddress, deliveryNumber, saleDate, totalPrice}) => (
+          <div>
+            <div data-testid ={`seller_orders__element-order-id-${id}`}> pedido {id}</div>
+            <div data-testid = {`seller_orders__element-delivery-status-${id}`}>{status}</div>
+            <div data-testid = {`seller_orders__element-card-address-${id}`}>{deliveryAddress}, {deliveryNumber}</div>
+            <div data-testid = {`seller_orders__element-order-date-${id}`}>{saleDate}</div>
+            <div data-testid = {`seller_orders__element-card-price-${id}`}>{totalPrice}</div>
+          </div>
+        ))}
 
-        </div>
-    )
+
+
+      </div>
+
+    </div>
+  )
 }
 
 export default SellerOrder

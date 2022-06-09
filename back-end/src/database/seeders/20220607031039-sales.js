@@ -5,7 +5,7 @@ module.exports = {
     await queryInterface.bulkInsert('sales', [
       {
         user_id: 3,
-        seller_id: 3,
+        seller_id: 2,
         total_price: 50.55,
         delivery_address: 'Rua do fulano, 410',
         delivery_number:'219999999',

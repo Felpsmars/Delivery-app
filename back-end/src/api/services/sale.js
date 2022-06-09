@@ -40,4 +40,4 @@ const saleDelivered = async (id) => {
     return response;
   };
 
-module.exports = { getAll, create, saleDelivered, getBySeller };
+module.exports = { getAll, create, saleDelivered, getBySeller }; 
