@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
-  const { updateUser } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const MIN_PASS_LENGTH = 6;
@@ -37,7 +37,18 @@ const Login = () => {
 
   useEffect(() => {
     if (isLogged) {
-      navigate('/customer/products');
+      const { role } = user;
+      switch (role) {
+        case 'admin': {
+          return navigate('/admin');
+        };
+        case 'seller': {
+          return navigate('/seller/orders');
+        };
+        default: {
+          return navigate('/customer/products');
+        }
+      }
     }
   }, [isLogged, navigate]);
 
@@ -49,10 +60,10 @@ const Login = () => {
           data-testid="common_login__input-email"
           type="email"
           name="email"
-          value={ email }
+          value={email}
           className="email"
           placeholder="Digite seu email"
-          onChange={ ({ target: { value } }) => setEmail(value) }
+          onChange={({ target: { value } }) => setEmail(value)}
           required
         />
       </label>
@@ -63,20 +74,20 @@ const Login = () => {
           type="password"
           name="senha"
           data-testid="common_login__input-password"
-          value={ password }
+          value={password}
           className="senha"
           placeholder="Digite sua senha"
-          onChange={ ({ target: { value } }) => setPassword(value) }
+          onChange={({ target: { value } }) => setPassword(value)}
           required
         />
       </label>
 
       <button
         type="button"
-        onClick={ login }
+        onClick={login}
         className="button"
         data-testid="common_login__button-login"
-        disabled={ !areFieldsValid }
+        disabled={!areFieldsValid}
       >
         Entrar
       </button>
@@ -84,7 +95,7 @@ const Login = () => {
         type="button"
         className="button"
         data-testid="common_login__button-register"
-        onClick={ () => navigate('/register') }
+        onClick={() => navigate('/register')}
       >
         Register
       </button>

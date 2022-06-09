@@ -10,7 +10,10 @@ const Navbar = ({ pageName }) => {
     switch (url) {
     case 'Produtos':
       return 'products';
-
+      
+    case 'Pedidos':
+      return 'orders';
+  
     default:
       return '';
     }
