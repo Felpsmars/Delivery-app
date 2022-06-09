@@ -19,6 +19,12 @@ saleRouter.route('/sale/:userId')
         saleController.getAll,
     );
 
+    saleRouter.route('/sale/seller/:sellerId')
+    .get(
+        authMiddleware.validateToken,
+        saleController.getBySeller,
+    );
+
 saleRouter.route('/delivered/:id')
     .patch(
         authMiddleware.validateToken,

@@ -12,10 +12,16 @@ const getAll = async (req, res) => {
   return res.status(200).json(response);
 };
 
+const getBySeller = async (req, res) => {
+  const { sellerId } = req.params;
+  const response = await saleService.getBySeller(sellerId);
+  return res.status(200).json(response);
+};
+
 const saleDelivered = async (req, res) => {
   const { id } = req.params;
   await saleService.saleDelivered(id);
   return res.status(200).json({ message: 'Status: delivered' });
 };
 
-module.exports = { getAll, create, saleDelivered };
+module.exports = { getAll, create, saleDelivered, getBySeller };
