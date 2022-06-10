@@ -1,19 +1,50 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../provider/UserProvider';
 
-const Navbar = ({ pageName }) => {
+const Navbar = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useContext(UserContext);
 
-  const urlStringPageName = (url) => {
-    switch (url) {
-    case 'Produtos':
-      return 'products';
-    case 'Pedidos':
-      return 'orders';
+  const leftSideButtons = () => {
+    switch (user.role) {
+    case 'administrator':
+      return (
+        <li>
+          <Link to="/">
+            Gerenciar Usuários
+          </Link>
+        </li>
+      );
+    case 'seller':
+      return (
+        <li>
+          <Link to="/seller/orders">
+            Pedidos
+          </Link>
+        </li>
+      );
     default:
-      return '';
+      return (
+        <>
+          <li>
+            <Link
+              data-testid="customer_products__element-navbar-link-products"
+              to="/customer/products"
+            >
+              Produtos
+            </Link>
+          </li>
+          <li>
+            <Link
+              data-testid="customer_products__element-navbar-link-orders"
+              to="/customer/orders"
+            >
+              Meus Pedidos
+            </Link>
+          </li>
+        </>
+      );
     }
   };
 
@@ -25,26 +56,8 @@ const Navbar = ({ pageName }) => {
     isLoading ? (
       <p>Carregando Navbar...</p>
     ) : (
-
       <ul className="navbar">
-        <li>
-          <a
-            data-testid={
-              `customer_products__element-navbar-link-${urlStringPageName(pageName)}`
-            }
-            href={ `/customer/${urlStringPageName(pageName)}` }
-          >
-            {pageName}
-          </a>
-        </li>
-        <li>
-          <a
-            data-testid="customer_products__element-navbar-link-orders"
-            href="/customer/orders"
-          >
-            Meus Pedidos
-          </a>
-        </li>
+        { leftSideButtons() }
         <li>
           <span
             data-testid="customer_products__element-navbar-user-full-name"
@@ -64,14 +77,6 @@ const Navbar = ({ pageName }) => {
       </ul>
     )
   );
-};
-
-Navbar.defaultProps = {
-  pageName: 'Produtos',
-};
-
-Navbar.propTypes = {
-  pageName: PropTypes.string,
 };
 
 export default Navbar;
