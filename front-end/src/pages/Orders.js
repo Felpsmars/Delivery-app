@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { SalesContext } from '../provider/SalesProvider';
+import { UserContext } from '../provider/UserProvider';
 
 const Orders = () => {
   const { sales } = useContext(SalesContext);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const convertNumberToPrice = (number) => (
@@ -19,26 +21,26 @@ const Orders = () => {
           <button
             type="button"
             key={ `sale-card-${sale.id}` }
-            onClick={ () => navigate(`/customer/orders/${sale.id}`) }
+            onClick={ () => navigate(`/${user.role}/orders/${sale.id}`) }
           >
             <p>
               Pedido
-              <span data-testid={ `customer_orders__element-order-id-${sale.id}` }>
+              <span data-testid={ `${user.role}_orders__element-order-id-${sale.id}` }>
                 {sale.id}
               </span>
             </p>
             <p
-              data-testid={ `customer_orders__element-delivery-status-${sale.id}` }
+              data-testid={ `${user.role}_orders__element-delivery-status-${sale.id}` }
             >
               { sale.status }
             </p>
             <p
-              data-testid={ `customer_orders__element-order-date-${sale.id}` }
+              data-testid={ `${user.role}_orders__element-order-date-${sale.id}` }
             >
               { sale.saleDate }
             </p>
             <p
-              data-testid={ `customer_orders__element-card-price-${sale.id}` }
+              data-testid={ `${user.role}_orders__element-card-price-${sale.id}` }
             >
               { convertNumberToPrice(sale.totalPrice) }
             </p>

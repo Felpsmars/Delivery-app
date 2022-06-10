@@ -4,7 +4,7 @@ import CartProvider from './CartProvider';
 import SalesProvider from './SalesProvider';
 import { UserContext } from './UserProvider';
 
-const ClientProvider = () => {
+const InfoProvider = () => {
   const { isUserValid, updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -28,4 +28,4 @@ const ClientProvider = () => {
   );
 };
 
-export default ClientProvider;
+export default InfoProvider;

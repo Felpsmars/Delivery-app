@@ -18,9 +18,12 @@ const SalesProvider = ({ children }) => {
 
   const fetchSales = async () => {
     const { REACT_APP_SERVER } = process.env;
+    const requestURI = user.role === 'customer'
+      ? `${REACT_APP_SERVER}/sale/${user.id}`
+      : `${REACT_APP_SERVER}/sale/seller/${user.id}`;
 
     try {
-      const response = await axios.get(`${REACT_APP_SERVER}/sale/${user.id}`, {
+      const response = await axios.get(requestURI, {
         headers: {
           authorization: user.token,
         },
