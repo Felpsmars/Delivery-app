@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import moment from 'moment';
 import { CartContext } from './CartProvider';
 import { UserContext } from './UserProvider';
 
@@ -11,15 +12,26 @@ const SalesProvider = ({ children }) => {
   const { cart, cartValue } = useContext(CartContext);
   const [sales, setSales] = useState([]);
 
+  const convertDateToString = (date) => (
+    moment(date).format('DD/MM/YYYY')
+  );
+
   const fetchSales = async () => {
     const { REACT_APP_SERVER } = process.env;
+    const requestURI = user.role === 'customer'
+      ? `${REACT_APP_SERVER}/sale/${user.id}`
+      : `${REACT_APP_SERVER}/sale/seller/${user.id}`;
 
     try {
-      await axios.get(`${REACT_APP_SERVER}/sale/${user.id}`, {
+      const response = await axios.get(requestURI, {
         headers: {
           authorization: user.token,
         },
       });
+      const salesWithFormattedData = response.data.map((sale) => (
+        { ...sale, saleDate: convertDateToString(sale.saleDate) }
+      ));
+      setSales(salesWithFormattedData);
     } catch (e) {
       console.log('Error while fetching sales ', e);
     }
@@ -38,7 +50,31 @@ const SalesProvider = ({ children }) => {
           authorization: user.token,
         },
       });
-      return response.data;
+      const newSale = response.data;
+      newSale.saleDate = convertDateToString(newSale.saleDate);
+      setSales([...sales, newSale]);
+      return newSale;
+    } catch (e) {
+      console.log('Error while creating sale ', e.message);
+    }
+  };
+
+  const updateSaleStatus = async (saleId, status) => {
+    const { REACT_APP_SERVER } = process.env;
+    try {
+      await axios.patch(`${REACT_APP_SERVER}/sale/${saleId}`, {
+        status,
+      }, {
+        headers: {
+          authorization: user.token,
+        },
+      });
+      const newSales = sales.reduce((acc, cur) => (
+        cur.id === saleId
+          ? [...acc, { ...cur, status }]
+          : acc
+      ), []);
+      setSales(newSales);
     } catch (e) {
       console.log('Error while creating sale ', e.message);
     }
@@ -51,7 +87,9 @@ const SalesProvider = ({ children }) => {
   const value = {
     sales,
     setSales,
+    fetchSales,
     postSale,
+    updateSaleStatus,
   };
 
   return (

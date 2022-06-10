@@ -8,7 +8,7 @@ import { CartContext } from '../provider/CartProvider';
 
 const Products = () => {
   const navigate = useNavigate();
-  const { user, isUserValid } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { cartValue, cartValueComma } = useContext(CartContext);
   const [products, setProducts] = useState([]);
   const { REACT_APP_SERVER } = process.env;
@@ -22,18 +22,11 @@ const Products = () => {
     setProducts(result.data);
   };
 
-  const validateUser = () => {
-    if (isUserValid === false) {
-      updateUser();
-      navigate('/');
-    } else if (isUserValid) {
+  useEffect(() => {
+    if (user.token) {
       fetchProducts();
     }
-  };
-
-  useEffect(() => {
-    validateUser();
-  }, [isUserValid]);
+  }, [user]);
 
   return (
     <div>

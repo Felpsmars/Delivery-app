@@ -4,12 +4,12 @@ import axios from 'axios';
 import { UserContext } from '../provider/UserProvider';
 
 const Login = () => {
+  const { user, updateUser, isUserValid } = useContext(UserContext);
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
-  const { updateUser } = useContext(UserContext);
-  const navigate = useNavigate();
 
   const MIN_PASS_LENGTH = 6;
   const emailCheck = email.match(/\S+@\S+\.\S+/);
@@ -25,7 +25,7 @@ const Login = () => {
       updateUser(newUser);
       setIsLogged(true);
     } catch (error) {
-      console.log(error);
+      console.log('Error in login: ', error);
       setWrongLogin(true);
     }
   };
@@ -36,10 +36,18 @@ const Login = () => {
   );
 
   useEffect(() => {
-    if (isLogged) {
-      navigate('/customer/products');
+    if (isLogged || isUserValid) {
+      const { role } = user;
+      switch (role) {
+      case 'admin':
+        return navigate('/admin');
+      case 'seller':
+        return navigate('/seller/orders');
+      default:
+        return navigate('/customer/products');
+      }
     }
-  }, [isLogged, navigate]);
+  }, [isLogged, navigate, isUserValid, user]);
 
   return (
     <form className="form-login">
