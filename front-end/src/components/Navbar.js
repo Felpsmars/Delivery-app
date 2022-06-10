@@ -19,7 +19,10 @@ const Navbar = () => {
     case 'seller':
       return (
         <li>
-          <Link to="/seller/orders">
+          <Link
+            to="/seller/orders"
+            data-testid="customer_products__element-navbar-link-orders"
+          >
             Pedidos
           </Link>
         </li>
