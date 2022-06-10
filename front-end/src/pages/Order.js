@@ -4,9 +4,11 @@ import Navbar from '../components/Navbar';
 import OrderHeader from '../components/OrderHeader';
 import ProductTable from '../components/ProductTable';
 import { SalesContext } from '../provider/SalesProvider';
+import { UserContext } from '../provider/UserProvider';
 
 const Order = () => {
   const { id: saleId } = useParams();
+  const { user } = useContext(UserContext);
   const { sales } = useContext(SalesContext);
   const [sale, setSale] = useState({});
 
@@ -30,7 +32,7 @@ const Order = () => {
         }
         <div>
           Total: R$
-          <span data-testid="customer_order_details__element-order-total-price">
+          <span data-testid={ `${user.role}_order_details__element-order-total-price` }>
             {sale.totalPrice && String(sale.totalPrice).split('.').join(',')}
           </span>
         </div>

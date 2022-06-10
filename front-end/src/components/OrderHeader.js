@@ -25,7 +25,7 @@ const OrderHeader = ({ sale }) => {
         data-testid="customer_order_details__button-delivery-check"
         type="button"
         onClick={ () => handleUpdateStatus('Entregue') }
-        disabled
+        disabled={ sale.status !== 'Em Trânsito' }
       >
         MARCAR COMO ENTREGUE
       </button>
@@ -35,7 +35,7 @@ const OrderHeader = ({ sale }) => {
           data-testid="seller_order_details__button-preparing-check"
           type="button"
           onClick={ () => handleUpdateStatus('Preparando') }
-          disabled
+          disabled={ sale.status !== 'Pendente' }
         >
           PREPARAR PEDIDO
         </button>
@@ -43,7 +43,7 @@ const OrderHeader = ({ sale }) => {
           data-testid="seller_order_details__button-dispatch-check"
           type="button"
           onClick={ () => handleUpdateStatus('Em Trânsito') }
-          disabled
+          disabled={ sale.status !== 'Preparando' }
         >
           SAIU PARA ENTREGA
         </button>
