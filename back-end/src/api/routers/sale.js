@@ -13,22 +13,20 @@ saleRouter.route('/sale')
         saleController.create,
     );
 
-saleRouter.route('/sale/:userId')
+saleRouter.route('/sale/:id')
     .get(
         authMiddleware.validateToken,
         saleController.getAll,
+    )
+    .patch(
+        authMiddleware.validateToken,
+        saleController.updateStatus,
     );
 
-    saleRouter.route('/sale/seller/:sellerId')
+saleRouter.route('/sale/seller/:sellerId')
     .get(
         authMiddleware.validateToken,
         saleController.getBySeller,
-    );
-
-saleRouter.route('/delivered/:id')
-    .patch(
-        authMiddleware.validateToken,
-        saleController.saleDelivered,
     );
 
 module.exports = saleRouter;

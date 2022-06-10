@@ -1,6 +1,6 @@
 const db = require('../../database/models');
 
-const { Sale, SalesProducts } = db;
+const { Sale, SalesProducts, Product } = db;
 
 const createProductAssociation = async (saleId, products) => (
   Promise.all(products.map(
@@ -12,9 +12,27 @@ const createProductAssociation = async (saleId, products) => (
   ))
 );
 
-const getAll = async (userId) => (
-  Sale.findAll({ where: { userId } })
-);
+const getProductsBySaleId = async (saleId) => {
+  const associations = await SalesProducts.findAll({ where: { saleId } });
+
+  const productPromises = associations.map(async ({ productId, quantity }) => {
+    const product = await Product.findOne({ where: { id: productId } });
+    return { ...product.dataValues, quantity };
+  });
+
+  return Promise.all(productPromises);
+};
+
+const getAll = async (userId) => {
+  const response = await Sale.findAll({ where: { userId } });
+
+  const salesPromises = response.map(async (sale) => {
+    const products = await getProductsBySaleId(sale.id);
+    return { ...sale.dataValues, products };
+  });
+
+  return Promise.all(salesPromises);
+};
 
 const getBySeller = async (sellerId) => (
   Sale.findAll({ where: { sellerId } }) 
@@ -35,9 +53,11 @@ const create = async ({ products, ...data }) => {
   }
 };
 
-const saleDelivered = async (id) => {
-   const response = await Sale.update({ status: 'Entregue' }, { where: { id } });
-    return response;
-  };
+const updateStatus = async (id, status) => (
+  Sale.update(
+     { status },
+     { where: { id } },
+  )
+);
 
-module.exports = { getAll, create, saleDelivered, getBySeller }; 
+module.exports = { getAll, getBySeller, create, updateStatus };

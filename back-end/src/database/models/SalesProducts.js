@@ -17,15 +17,13 @@ const data2 = {
 module.exports = (sequelize, DataTypes) => {
     const salesProducts = sequelize.define('SalesProducts', {
         saleId: {
-            type: INTEGER,
-            primaryKey: true,
+            type: DataTypes.INTEGER,
             allowNull: false,
-          },
-          productId: {
-            type: INTEGER,
-            primaryKey: true,
+        },
+        productId: {
+            type: DataTypes.INTEGER,
             allowNull: false,
-          },
+        },
         quantity: {
             type: DataTypes.INTEGER,
             allowNull: false,

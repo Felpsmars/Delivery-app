@@ -7,6 +7,8 @@ import CreateUser from './pages/CreateUser';
 import Checkout from './pages/Checkout';
 import ClientProvider from './provider/ClientProvider';
 import SellerOrder from './pages/SellerOrder';
+import Orders from './pages/Orders';
+import Order from './pages/Order';
 
 function App() {
   return (
@@ -17,8 +19,10 @@ function App() {
       <Route path="/customer" element={ <ClientProvider /> }>
         <Route path="products" element={ <Products /> } />
         <Route path="checkout" element={ <Checkout /> } />
+        <Route path="orders" element={ <Orders /> } />
+        <Route path="orders/:id" element={ <Order /> } />
       </Route>
-      <Route path='/seller/orders' element={ <SellerOrder /> } />
+      <Route path="/seller/orders" element={ <SellerOrder /> } />
     </Routes>
   );
 }

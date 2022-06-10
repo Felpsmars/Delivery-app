@@ -1,33 +1,18 @@
-import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../provider/UserProvider';
+import React, { useContext } from 'react';
 import { CartContext } from '../provider/CartProvider';
 import Navbar from '../components/Navbar';
 import CheckoutFinish from '../components/CheckoutFinish';
 import ProductTable from '../components/ProductTable';
 
 function Checkout() {
-  const { user, isUserValid, updateUser } = useContext(UserContext);
-  const { cartValueComma } = useContext(CartContext);
-  const navigate = useNavigate();
-
-  const validateUser = async () => {
-    if (isUserValid === false) {
-      updateUser();
-      navigate('/');
-    }
-  };
-
-  useEffect(() => {
-    validateUser();
-  }, [user]);
+  const { cart, cartValueComma } = useContext(CartContext);
 
   return (
     <>
       <Navbar pageName="Produtos" />
       <h2>Finalizar Pedido</h2>
       <div>
-        <ProductTable />
+        <ProductTable products={ cart } isCart />
         <div>
           Total: R$
           <span data-testid="customer_checkout__element-order-total-price">

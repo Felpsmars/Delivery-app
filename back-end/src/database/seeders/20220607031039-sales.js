@@ -6,7 +6,7 @@ module.exports = {
       {
         user_id: 3,
         seller_id: 2,
-        total_price: 50.55,
+        total_price: 22.50,
         delivery_address: 'Rua do fulano, 410',
         delivery_number:'219999999',
         sale_date:'2022/07/12',

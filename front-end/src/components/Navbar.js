@@ -10,10 +10,8 @@ const Navbar = ({ pageName }) => {
     switch (url) {
     case 'Produtos':
       return 'products';
-      
     case 'Pedidos':
       return 'orders';
-  
     default:
       return '';
     }
@@ -42,7 +40,7 @@ const Navbar = ({ pageName }) => {
         <li>
           <a
             data-testid="customer_products__element-navbar-link-orders"
-            href="/customer/products"
+            href="/customer/orders"
           >
             Meus Pedidos
           </a>

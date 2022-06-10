@@ -4,12 +4,12 @@ import axios from 'axios';
 import { UserContext } from '../provider/UserProvider';
 
 const Login = () => {
+  const { user, updateUser, isUserValid } = useContext(UserContext);
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
   const [wrongLogin, setWrongLogin] = useState(false);
-  const { user, updateUser } = useContext(UserContext);
-  const navigate = useNavigate();
 
   const MIN_PASS_LENGTH = 6;
   const emailCheck = email.match(/\S+@\S+\.\S+/);
@@ -25,7 +25,7 @@ const Login = () => {
       updateUser(newUser);
       setIsLogged(true);
     } catch (error) {
-      console.log(error);
+      console.log('Error in login: ', error);
       setWrongLogin(true);
     }
   };
@@ -36,21 +36,18 @@ const Login = () => {
   );
 
   useEffect(() => {
-    if (isLogged) {
+    if (isLogged || isUserValid) {
       const { role } = user;
       switch (role) {
-        case 'admin': {
-          return navigate('/admin');
-        };
-        case 'seller': {
-          return navigate('/seller/orders');
-        };
-        default: {
-          return navigate('/customer/products');
-        }
+      case 'admin':
+        return navigate('/admin');
+      case 'seller':
+        return navigate('/seller/orders');
+      default:
+        return navigate('/customer/products');
       }
     }
-  }, [isLogged, navigate]);
+  }, [isLogged, navigate, isUserValid, user]);
 
   return (
     <form className="form-login">
@@ -60,10 +57,10 @@ const Login = () => {
           data-testid="common_login__input-email"
           type="email"
           name="email"
-          value={email}
+          value={ email }
           className="email"
           placeholder="Digite seu email"
-          onChange={({ target: { value } }) => setEmail(value)}
+          onChange={ ({ target: { value } }) => setEmail(value) }
           required
         />
       </label>
@@ -74,20 +71,20 @@ const Login = () => {
           type="password"
           name="senha"
           data-testid="common_login__input-password"
-          value={password}
+          value={ password }
           className="senha"
           placeholder="Digite sua senha"
-          onChange={({ target: { value } }) => setPassword(value)}
+          onChange={ ({ target: { value } }) => setPassword(value) }
           required
         />
       </label>
 
       <button
         type="button"
-        onClick={login}
+        onClick={ login }
         className="button"
         data-testid="common_login__button-login"
-        disabled={!areFieldsValid}
+        disabled={ !areFieldsValid }
       >
         Entrar
       </button>
@@ -95,7 +92,7 @@ const Login = () => {
         type="button"
         className="button"
         data-testid="common_login__button-register"
-        onClick={() => navigate('/register')}
+        onClick={ () => navigate('/register') }
       >
         Register
       </button>

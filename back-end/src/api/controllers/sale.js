@@ -7,8 +7,8 @@ const create = async (_req, res) => {
 };
 
 const getAll = async (req, res) => {
-  const { userId } = req.params;
-  const response = await saleService.getAll(userId);
+  const { id } = req.params;
+  const response = await saleService.getAll(id);
   return res.status(200).json(response);
 };
 
@@ -18,10 +18,11 @@ const getBySeller = async (req, res) => {
   return res.status(200).json(response);
 };
 
-const saleDelivered = async (req, res) => {
+const updateStatus = async (req, res) => {
   const { id } = req.params;
-  await saleService.saleDelivered(id);
-  return res.status(200).json({ message: 'Status: delivered' });
+  const { status } = req.body;
+  await saleService.updateStatus(id, status);
+  return res.status(200).json({ message: 'Status updated!' });
 };
 
-module.exports = { getAll, create, saleDelivered, getBySeller };
+module.exports = { getAll, getBySeller, create, updateStatus };
