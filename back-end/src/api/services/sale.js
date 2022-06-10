@@ -34,9 +34,16 @@ const getAll = async (userId) => {
   return Promise.all(salesPromises);
 };
 
-const getBySeller = async (sellerId) => (
-  Sale.findAll({ where: { sellerId } }) 
-);
+const getBySeller = async (sellerId) => {
+  const response = await Sale.findAll({ where: { sellerId } });
+
+  const salesPromises = response.map(async (sale) => {
+    const products = await getProductsBySaleId(sale.id);
+    return { ...sale.dataValues, products };
+  });
+
+  return Promise.all(salesPromises);
+};
 
 const create = async ({ products, ...data }) => {
   const t = await db.sequelize.transaction();
