@@ -51,6 +51,8 @@ const OrderHeader = ({ sale }) => {
     )
   );
 
+  const sellerNameTId = 'customer_order_details__element-order-details-label-seller-name';
+
   return (
     <div>
       <p>
@@ -64,11 +66,11 @@ const OrderHeader = ({ sale }) => {
         </span>
       </p>
       {
-        user.role === 'customer ' && (
+        user.role === 'customer' && (
           <p>
             p. Vend:
             <span
-              data-testid="customer_order_details__element-order-details-label-order-id"
+              data-testid={ sellerNameTId }
             >
               {seller.name}
             </span>
