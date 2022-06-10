@@ -10,7 +10,7 @@ const Orders = () => {
   const navigate = useNavigate();
 
   const convertNumberToPrice = (number) => (
-    `R$ ${number.split('.').join(',')}`
+    `R$ ${String(number).split('.').join(',')}`
   );
 
   return (
