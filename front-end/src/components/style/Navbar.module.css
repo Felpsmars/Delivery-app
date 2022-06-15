@@ -1,17 +1,16 @@
 .navbar {
+  background-color: #026a52;
   display: flex;
+  font-size: 24px;
   justify-content: space-between;
   padding: 30px 0;
-  font-size: 24px;
-  background-color: #026a52;
   word-spacing: 4px;
 }
 
-.navbarLeft > *,
-.navbarRight > * {
+.navbarLeft > *, .navbarRight > * {
+  color: white;
   padding: 30px 70px;
   text-decoration: none;
-  color: #fff;
 }
 
 .navbarLeft {
@@ -26,12 +25,11 @@
   background-color: #431881;
 }
 
-.navbarOrders,
-.navbarProducts {
+.navbarOrders, .navbarProducts {
   background-color: #026a52;
 }
 
 .navbarSelected {
   background-color: #2fc18c;
-  color: #000;
+  color: black;
 }
