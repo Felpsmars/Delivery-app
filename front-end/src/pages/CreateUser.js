@@ -1,7 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../provider/UserProvider';
+import style from './style/CreateUser.module.css';
+import appIcon from '../assets/app-icon.jpg';
 
 const CreateUser = () => {
   const [email, setEmail] = useState('');
@@ -37,67 +39,71 @@ const CreateUser = () => {
     && emailCheck
   );
 
+  useEffect(() => {
+    document.title = 'Cadastro - Delivery App';
+  }, []);
+
   return (
-    <form className="form-login">
-      <label className="label" htmlFor="email">
-        Nome:
-        <input
-          data-testid="common_register__input-name"
-          type="text"
-          name="name"
-          value={ name }
-          className="email"
-          placeholder="Digite seu nome"
-          onChange={ ({ target: { value } }) => setName(value) }
-          required
-        />
-      </label>
+    <div className={ style.createUserContainer }>
+      <img src={ appIcon } alt="app logo" className={ style.appIcon } />
+      <h1>Cadastro - Delivery App</h1>
+      <form className={ style.createUserForm }>
+        <label className={ style.createUserLabel } htmlFor="email">
+          Nome
+          <input
+            data-testid="common_register__input-name"
+            type="text"
+            name="name"
+            value={ name }
+            placeholder="Seu nome"
+            onChange={ ({ target: { value } }) => setName(value) }
+            required
+          />
+        </label>
 
-      <label className="label" htmlFor="email">
-        Email:
-        <input
-          data-testid="common_register__input-email"
-          type="email"
-          name="email"
-          value={ email }
-          className="email"
-          placeholder="Digite seu email"
-          onChange={ ({ target: { value } }) => setEmail(value) }
-          required
-        />
-      </label>
+        <label className={ style.createUserLabel } htmlFor="email">
+          Email
+          <input
+            data-testid="common_register__input-email"
+            type="email"
+            name="email"
+            value={ email }
+            placeholder="seu-email@site.com.br"
+            onChange={ ({ target: { value } }) => setEmail(value) }
+            required
+          />
+        </label>
 
-      <label className="label" htmlFor="password">
-        Senha:
-        <input
-          type="password"
-          name="senha"
-          data-testid="common_register__input-password"
-          value={ password }
-          className="senha"
-          placeholder="Digite sua senha"
-          onChange={ ({ target: { value } }) => setPassword(value) }
-          required
-        />
-      </label>
+        <label className={ style.createUserLabel } htmlFor="password">
+          Senha
+          <input
+            type="password"
+            name="senha"
+            data-testid="common_register__input-password"
+            value={ password }
+            placeholder="***********"
+            onChange={ ({ target: { value } }) => setPassword(value) }
+            required
+          />
+        </label>
 
-      <button
-        type="button"
-        onClick={ create }
-        className="button"
-        data-testid="common_register__button-register"
-        disabled={ !areFieldsValid }
-      >
-        Registrar
-      </button>
-
+        <button
+          type="button"
+          onClick={ create }
+          className={ style.formRegisterButton }
+          data-testid="common_register__button-register"
+          disabled={ !areFieldsValid }
+        >
+          CADASTRAR
+        </button>
+      </form>
       {wrongLoginRegister && (
         <p
           data-testid="common_register__element-invalid_register"
         >
-          MESSAGE
+          Não foi possível efetuar cadastro
         </p>)}
-    </form>
+    </div>
   );
 };
 

@@ -38,6 +38,10 @@ const Login = () => {
   );
 
   useEffect(() => {
+    document.title = 'Login - Delivery App';
+  }, []);
+
+  useEffect(() => {
     if (isLogged || isUserValid) {
       const { role } = user;
       switch (role) {
