@@ -1,0 +1,60 @@
+.cardImage {
+  left: 18%;
+  max-height: 60%;
+  max-width: 80%;
+  position: absolute;
+  top: 10px;
+  z-index: 1;
+}
+
+.card {
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  display: inline-block;
+  height: 230px;
+  margin: 40px;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  width: 200px;
+
+}
+
+.cardButton {
+  height: 20px;
+  left: 28%;
+  position: relative;
+  top: 200px;
+  z-index: 2;
+}
+
+.cardinput {
+  width: 35px;
+}
+
+.cardTitle {
+  font-size: 12px;
+  left: 28%;
+  position: absolute;
+  top: 175px;
+  z-index: 3;
+
+}
+
+.button {
+  background-color: #1f7a54;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  height: 21px;
+  width: 21px;
+}
+
+
+.price {
+  font-weight: 800;
+  left: 25px;
+  position: absolute;
+  z-index: 4;
+}
+

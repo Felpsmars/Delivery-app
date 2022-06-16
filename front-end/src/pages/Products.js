@@ -26,7 +26,7 @@ const Products = () => {
     if (user.token) {
       fetchProducts();
     }
-  }, [user]);
+  }, [fetchProducts, user]);
 
   return (
     <div>
@@ -43,6 +43,7 @@ const Products = () => {
         data-testid="customer_products__button-cart"
         onClick={ () => navigate('/customer/checkout') }
         disabled={ cartValue === '0.00' }
+
       >
         Ver Carrinho R$
         <span data-testid="customer_products__checkout-bottom-value">
