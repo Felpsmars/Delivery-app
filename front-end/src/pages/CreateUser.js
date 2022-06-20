@@ -100,6 +100,7 @@ const CreateUser = () => {
       {wrongLoginRegister && (
         <p
           data-testid="common_register__element-invalid_register"
+          className={ style.createUserError }
         >
           Não foi possível efetuar cadastro
         </p>)}
