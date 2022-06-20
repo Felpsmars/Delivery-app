@@ -51,17 +51,20 @@
   background-color: #026a52;
   border: 0;
   color: white;
+  cursor: pointer;
 }
 
 .formLoginButton:disabled {
   background-color: #388271;
   color: white;
+  cursor: default;
 }
 
 .formRegisterButton {
   background-color: transparent;
   border: 2px solid #026a52;
   color: #026a52;
+  cursor: pointer;
   font-weight: 600;
 }
 

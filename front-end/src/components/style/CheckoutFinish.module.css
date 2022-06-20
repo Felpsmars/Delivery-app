@@ -1,0 +1,51 @@
+.checkoutDetailsContainer {
+  background-color: #fafefe;
+  box-shadow: -1px 2px 5px #00000049;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px;
+}
+
+.checkoutDetailsContainer label {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.checkoutDetailsContainer label select, .checkoutDetailsContainer label input {
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 5px;
+  outline: none;
+  padding: 10px;
+}
+
+.checkoutSeller {
+  flex-grow: 1;
+}
+
+.checkoutAddress {
+  flex-grow: 3;
+}
+
+.checkoutNumber {
+  flex-grow: 1;
+}
+
+.finishButtonWrapper {
+  text-align: center;
+  width: 100%;
+}
+
+.finishButtonWrapper button {
+  background-color: #026b53;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin: 10px 0;
+  padding: 20px 75px;
+}

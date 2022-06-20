@@ -50,7 +50,7 @@
   color: white;
 }
 
-.loginError {
+.createUserError {
   color: #b70000;
   font-weight: 600;
 }

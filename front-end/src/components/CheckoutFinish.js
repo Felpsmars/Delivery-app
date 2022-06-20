@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../provider/UserProvider';
 import { CartContext } from '../provider/CartProvider';
 import { SalesContext } from '../provider/SalesProvider';
+import style from './style/CheckoutFinish.module.css';
 
 const CheckoutFinish = () => {
   const { sellers } = useContext(UserContext);
@@ -37,8 +38,8 @@ const CheckoutFinish = () => {
   }, [sellers]);
 
   return (
-    <div>
-      <label htmlFor="sellerId">
+    <div className={ style.checkoutDetailsContainer }>
+      <label htmlFor="sellerId" className={ style.checkoutSeller }>
         P. Vendedora Responsável
         <select
           data-testid="customer_checkout__select-seller"
@@ -56,7 +57,7 @@ const CheckoutFinish = () => {
           ))}
         </select>
       </label>
-      <label htmlFor="address">
+      <label htmlFor="address" className={ style.checkoutAddress }>
         Endereço
         <input
           data-testid="customer_checkout__input-address"
@@ -67,7 +68,7 @@ const CheckoutFinish = () => {
           value={ details.deliveryAddress }
         />
       </label>
-      <label htmlFor="number">
+      <label htmlFor="number" className={ style.checkoutNumber }>
         Número
         <input
           data-testid="customer_checkout__input-addressNumber"
@@ -78,14 +79,16 @@ const CheckoutFinish = () => {
           value={ details.deliveryNumber }
         />
       </label>
-      <button
-        data-testid="customer_checkout__button-submit-order"
-        type="button"
-        onClick={ handleFinish }
-        disabled={ !areFieldsValid }
-      >
-        Finalizar Pedido
-      </button>
+      <div className={ style.finishButtonWrapper }>
+        <button
+          data-testid="customer_checkout__button-submit-order"
+          type="button"
+          onClick={ handleFinish }
+          disabled={ !areFieldsValid }
+        >
+          FINALIZAR PEDIDO
+        </button>
+      </div>
     </div>
   );
 };
