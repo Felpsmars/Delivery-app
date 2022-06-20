@@ -7,7 +7,6 @@ const Navbar = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useContext(UserContext);
-  console.log(location.pathname);
 
   const leftSideButtons = () => {
     switch (user.role) {

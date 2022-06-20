@@ -1,0 +1,101 @@
+.productTableContainer {
+  box-shadow: -1px 2px 5px #00000049;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.productTable {
+  border-spacing: 0;
+  width: 100%;
+}
+
+.productTableHeader {
+  padding-bottom: 20px;
+}
+
+.productTableHeader tr th {
+  font-weight: 500;
+}
+
+.productTableBody:before {
+  content: '@';
+  display: block;
+  line-height: 10px;
+  text-indent: -99999px;
+}
+
+.productItem {
+  font-weight: 600;
+  height: 50px;
+  text-align: center;
+}
+
+.productItem * {
+  font-size: 20px;
+}
+
+.productItem td {
+  padding: 0 15px;
+}
+
+.productItemNumber {
+  background-color: #2ec18d;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+  color: black;
+  font-weight: 700;
+  text-align: center;
+}
+
+.productItemDescription {
+  background-color: #eaf1ef;
+  text-align: start;
+}
+
+.productItemQuantity {
+  background-color: #026b53;
+  color: white;
+}
+
+.productItemPrice {
+  background-color: #431881;
+  color: white;
+}
+
+.productItemSubtotal {
+  background-color: #056cf9;
+  color: white;
+}
+
+.productItemRemoveButton {
+  all: unset;
+  background-color: #2ec18d;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  cursor: pointer;
+  display: block;
+}
+
+.productItemRemoveButton button {
+  background-color: #2ec18d;
+  border: none;
+  color: white;
+  height: 50px;
+  outline: none;
+}
+
+.tableTotalWrapper {
+  align-self: flex-end;
+  background-color: #026b53;
+  border-radius: 10px;
+  color: white;
+  font-size: 36px;
+  font-weight: 700;
+  margin: 40px 10px 10px 0;
+  padding: 8px 30px;
+}
+
+.tableTotalWrapper span:nth-child( 1 ) {
+  margin-right: 10px;
+}
