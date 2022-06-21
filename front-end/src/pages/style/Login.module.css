@@ -1,0 +1,74 @@
+.loginContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 150px;
+}
+
+.appIcon {
+  width: 200px;
+}
+
+.loginForm {
+  background-color: #ebf1ee;
+  border: 1px solid #00000027;
+  box-shadow: -1px 2px 5px #00000049;
+  padding: 20px;
+  width: 275px;
+}
+
+.loginLabel {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  padding: 8px 0;
+}
+
+.loginLabel input {
+  border: 1px solid #0000007b;
+  border-radius: 4px;
+  box-shadow: -1px 2px 5px #00000049;
+  font-size: 16px;
+  margin-top: 5px;
+  outline: none;
+  padding: 12px;
+}
+
+.formButtonContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.formButtonContainer button {
+  border-radius: 8px;
+  font-size: 16px;
+  margin: 8px 0;
+  padding: 12px 0;
+}
+
+.formLoginButton {
+  background-color: #026a52;
+  border: 0;
+  color: white;
+  cursor: pointer;
+}
+
+.formLoginButton:disabled {
+  background-color: #388271;
+  color: white;
+  cursor: default;
+}
+
+.formRegisterButton {
+  background-color: transparent;
+  border: 2px solid #026a52;
+  color: #026a52;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.loginError {
+  color: #b70000;
+  font-weight: 600;
+}

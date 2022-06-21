@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { UserContext } from '../provider/UserProvider';
+import style from './style/Navbar.module.css';
 
 const Navbar = () => {
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useContext(UserContext);
 
@@ -10,42 +12,46 @@ const Navbar = () => {
     switch (user.role) {
     case 'administrator':
       return (
-        <li>
-          <Link to="/">
-            Gerenciar Usuários
-          </Link>
-        </li>
+        <Link to="/" className={ style.navbarSelected }>
+          GERENCIAR USUÁRIOS
+        </Link>
       );
     case 'seller':
       return (
-        <li>
-          <Link
-            to="/seller/orders"
-            data-testid="customer_products__element-navbar-link-orders"
-          >
-            Pedidos
-          </Link>
-        </li>
+        <Link
+          to="/seller/orders"
+          data-testid="customer_products__element-navbar-link-orders"
+          className={
+            `${style.navbarOrders}
+            ${location.pathname === '/seller/orders' && style.navbarSelected}`
+          }
+        >
+          PEDIDOS
+        </Link>
       );
     default:
       return (
         <>
-          <li>
-            <Link
-              data-testid="customer_products__element-navbar-link-products"
-              to="/customer/products"
-            >
-              Produtos
-            </Link>
-          </li>
-          <li>
-            <Link
-              data-testid="customer_products__element-navbar-link-orders"
-              to="/customer/orders"
-            >
-              Meus Pedidos
-            </Link>
-          </li>
+          <Link
+            to="/customer/products"
+            data-testid="customer_products__element-navbar-link-products"
+            className={
+              `${style.navbarProducts}
+              ${location.pathname === '/customer/products' && style.navbarSelected}`
+            }
+          >
+            PRODUTOS
+          </Link>
+          <Link
+            data-testid="customer_products__element-navbar-link-orders"
+            to="/customer/orders"
+            className={
+              `${style.navbarOrders}
+              ${location.pathname === '/customer/orders' && style.navbarSelected}`
+            }
+          >
+            MEUS PEDIDOS
+          </Link>
         </>
       );
     }
@@ -59,25 +65,28 @@ const Navbar = () => {
     isLoading ? (
       <p>Carregando Navbar...</p>
     ) : (
-      <ul className="navbar">
-        { leftSideButtons() }
-        <li>
+      <nav className={ style.navbar }>
+        <div className={ style.navbarLeft }>
+          {leftSideButtons()}
+        </div>
+        <div className={ style.navbarRight }>
+
           <span
             data-testid="customer_products__element-navbar-user-full-name"
+            className={ style.navbarUsername }
           >
             {user.name}
           </span>
-        </li>
-        <li>
           <a
             data-testid="customer_products__element-navbar-link-logout"
+            className={ style.navbarLogout }
             href="/"
-            onClick={ () => logout() }
+            onClick={ logout }
           >
             Sair
           </a>
-        </li>
-      </ul>
+        </div>
+      </nav>
     )
   );
 };

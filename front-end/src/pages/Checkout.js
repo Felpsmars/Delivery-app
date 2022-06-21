@@ -3,25 +3,20 @@ import { CartContext } from '../provider/CartProvider';
 import Navbar from '../components/Navbar';
 import CheckoutFinish from '../components/CheckoutFinish';
 import ProductTable from '../components/ProductTable';
+import style from './style/Checkout.module.css';
 
 function Checkout() {
-  const { cart, cartValueComma } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
 
   return (
     <>
       <Navbar pageName="Produtos" />
-      <h2>Finalizar Pedido</h2>
-      <div>
+      <div className={ style.checkoutContainer }>
+        <h2>Finalizar Pedido</h2>
         <ProductTable products={ cart } isCart />
-        <div>
-          Total: R$
-          <span data-testid="customer_checkout__element-order-total-price">
-            {cartValueComma}
-          </span>
-        </div>
+        <h2>Detalhes e Endereço para Entrega</h2>
+        <CheckoutFinish />
       </div>
-      <h2>Detalhes e Endereço para Entrega</h2>
-      <CheckoutFinish />
     </>
   );
 }

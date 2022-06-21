@@ -1,0 +1,47 @@
+.navbar {
+  background-color: #026a52;
+  display: flex;
+  font-size: 24px;
+  justify-content: space-between;
+  padding: 30px 0;
+  word-spacing: 4px;
+}
+
+.navbarLeft > *, .navbarRight > * {
+  color: white;
+  padding: 30px 70px;
+  text-decoration: none;
+}
+
+.navbarLeft {
+  font-weight: 700;
+}
+
+.navbarLogout {
+  background-color: #056cf9;
+}
+
+.navbarUsername {
+  background-color: #431881;
+}
+
+.navbarOrders, .navbarProducts {
+  background-color: #026a52;
+}
+
+.navbarSelected {
+  background-color: #2fc18c;
+  color: black;
+}
+
+@media screen and ( max-width : 1100px ) {
+
+  .navbar {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .navbarLeft > *, .navbarRight > * {
+    display: flex;
+  }
+}

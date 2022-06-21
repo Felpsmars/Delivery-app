@@ -1,0 +1,79 @@
+.orderContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 30px 50px;
+}
+
+.orderButton {
+  align-items: stretch;
+  background-color: #ebf1ee;
+  border: 1px solid #b0c2bf;
+  box-shadow: -1px 2px #00000057;
+  display: flex;
+  height: 100px;
+  margin: 15px 10px;
+  padding: 0;
+  position: relative;
+  width: max(450px, 45%);
+}
+
+.orderButton > * {
+  padding: 5px;
+}
+
+.orderNumber {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  justify-content: center;
+  margin: 0;
+  padding: 0 30px;
+  width: 25%;
+}
+
+.orderNumber span {
+  font-weight: 600;
+}
+
+.orderStatus {
+  align-items: center;
+  background-color: #87d43d;
+  border-radius: 5px;
+  display: flex;
+  font-size: 20px;
+  font-weight: 700;
+  justify-content: center;
+  margin: 5px;
+  padding: 20px 40px;
+  width: 25%;
+}
+
+.Pendente {
+  background-color: #d4c73d;
+}
+
+.Entregue {
+  background-color: #3bd5b0;
+}
+
+.Preparando {
+  background-color: #87d43d;
+}
+
+.orderDateAndPrice {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-weight: 800;
+  justify-content: center;
+  width: 30%;
+}
+
+.orderDateAndPrice > span {
+  background-color: #f1faf8;
+  font-size: 15px;
+  margin: 8px 0;
+  padding: 6px 0;
+  width: 100%;
+}
