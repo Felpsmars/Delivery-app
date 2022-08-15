@@ -56,26 +56,30 @@ Abaixo alguns screenshots da aplicação final:
 <img height="250" src="/screenshots/db_1.png" /> <img height="250" src="/screenshots/db_2.png" />
 
 ## Instalando Dependências
-
+> Raiz
+```bash
+npm install
+``` 
 > Backend
 ```bash
-cd api/ 
+cd backend/ 
 npm install
 ``` 
 > Frontend
 ```bash
-cd src/
+cd frontend/
 npm install
 ``` 
 ## Executando aplicação
 
-* Para rodar o back-end:
-
+* Para rodar o back-end configurar `.env` conforme `.env.example`
   ```
-  cd backend/ && npm run db:reset
+  docker-compose up
   ```
-* Para rodar o front-end:
-
   ```
-    cd src/ && npm start
+  npm run db:reset
+  ```
+* Para rodar o front-end primeiro configurar `.env` conforme `.env.example`
+  ```
+  cd src/ && npm start
   ```
