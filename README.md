@@ -19,8 +19,7 @@ Abaixo alguns screenshots da aplicação final:
 <img height="250" src="/screenshots/app_4.png" />
 
 ### Banco de Dados
-<<<<<<< HEAD
+
 <img height="250" src="/screenshots/db_1.png" /> <img height="250" src="/screenshots/db_2.png" />
-=======
-<img height="250" src="/screenshots/db_1.png" /> <img height="250" src="/screenshots/db_2.png" />
->>>>>>> c1f153d89ef9506f21430d9c72061e1828ee7901
+
+
