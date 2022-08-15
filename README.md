@@ -5,7 +5,7 @@ Projeto Delivery App desenvolvido no final do Módulo de Back-end do curso da Tr
 No Projeto criamos um modelo Full-stack de um Delivery App utilizando diversas tecnologias:
 <details>
   <summary>
-    <strong>👨‍💻 O que deverá ser desenvolvido</strong>
+    <strong>👨‍💻 o que foi desenvolvido!</strong>
   </summary><br>
 
   Esse será o seu projeto mais completo até agora! Nessa aplicação, seu grupo será responsável por criar e integrar tanto o back-end quanto o front-end, criando uma plataforma de delivery de cerveja. 🍻
