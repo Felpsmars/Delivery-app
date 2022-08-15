@@ -55,4 +55,27 @@ Abaixo alguns screenshots da aplicação final:
 
 <img height="250" src="/screenshots/db_1.png" /> <img height="250" src="/screenshots/db_2.png" />
 
+## Instalando Dependências
 
+> Backend
+```bash
+cd api/ 
+npm install
+``` 
+> Frontend
+```bash
+cd src/
+npm install
+``` 
+## Executando aplicação
+
+* Para rodar o back-end:
+
+  ```
+  cd backend/ && npm run db:reset
+  ```
+* Para rodar o front-end:
+
+  ```
+    cd src/ && npm start
+  ```
