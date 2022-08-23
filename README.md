@@ -1,6 +1,6 @@
 # Delivery App
 
-Projeto Delivery App desenvolvido no final do Módulo de Back-end do curso da Trybe em conjunto com [Lygia Dias](https://github.com/LygiaDias), [Ricardo Zabir](https://github.com/ricardo-zabir), [Felipe Martins](https://github.com/Felpsmars) e [João V. Oliveira](https://github.com/joaovitor-oliveira).
+Projeto Delivery App desenvolvido no final do Módulo de Back-end do curso da Trybe em conjunto com [Lygia Dias](https://github.com/LygiaDias), [Ricardo Zabir](https://github.com/ricardo-zabir), [Rafael Scherer](https://github.com/RafaelAugustScherer) e [João V. Oliveira](https://github.com/joaovitor-oliveira).
 
 No Projeto criamos um modelo Full-stack de um Delivery App utilizando diversas tecnologias:
 <details>
